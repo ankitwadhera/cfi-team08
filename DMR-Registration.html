@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, Chrome=1">
+        <title>DMR-Registration</title>
+        <link href="./DMR-Registration_files/bootstrap.min.css" rel="stylesheet">     
+        <link href="./DMR-Registration_files/style.css" rel="stylesheet">    
+        <link href="./DMR-Registration_files/stylen.css" rel="stylesheet">    
+        <script src="./DMR-Registration_files/jquery.min.js"></script>
+        <script src="./DMR-Registration_files/bootstrap.min.js"></script>
+        <script src="./DMR-Registration_files/select2.js"></script>
+        <link href="./DMR-Registration_files/ionicons.min.css" rel="stylesheet" type="text/css">
+        <link href="./DMR-Registration_files/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+        <style>
+            fieldset.scheduler-border {
+                border: 1px groove #ddd !important;
+                padding: 0 1.2em 1.2em 1.2em !important;
+                margin: 0 0 1.2em 0 !important;
+                -webkit-box-shadow:  0px 0px 0px 0px #000;
+                box-shadow:  0px 0px 0px 0px #000;
+            }
+            legend.scheduler-border {
+                font-size: 1.0em !important;
+                font-weight: bold !important;
+                text-align: left !important;
+                width:auto;
+                padding:0 2px;
+                border-bottom:none;
+                margin-bottom: 0px;
+            }
+
+        </style>
+        <script type="text/javascript">
+            function getXMLObject()  //XML OBJECT
+            {
+                var xmlHttp = false;
+                try {
+                    xmlHttp = new ActiveXObject("Msxml2.XMLHTTP")  // For Old Microsoft Browsers
+                }
+                catch (e) {
+                    try {
+                        xmlHttp = new ActiveXObject("Microsoft.XMLHTTP")  // For Microsoft IE 6.0+
+                    }
+                    catch (e2) {
+                        xmlHttp = false   // No Browser accepts the XMLHTTP Object then false
+                    }
+                }
+                if (!xmlHttp && typeof XMLHttpRequest != 'undefined') {
+                    xmlHttp = new XMLHttpRequest();        //For Mozilla, Opera Browsers
+                }
+                return xmlHttp;  // Mandatory Statement returning the ajax object created
+            }
+            var xmlhttp = new getXMLObject();
+
+            function AjaxFillDropdown(s_code, target) {
+                if (xmlhttp)
+                {
+                    var queryStr = "argument_type=1&s_code=" + s_code;
+                    xmlhttp.open("POST", "/orfadmin/Slvt_Dropdown", true);
+                    xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=UTF-8");
+                    xmlhttp.setRequestHeader("Content-length", queryStr.length);
+                    xmlhttp.setRequestHeader("Connection", "close");
+                    xmlhttp.onreadystatechange = function ()
+                    {
+                        if ((xmlhttp.readyState == 4) && (xmlhttp.status == 200)) // done and responded
+                        {
+                            //document.getElementById(target_id).innerHTML =  xmlhttp.responseText;
+                            if (xmlhttp.responseText != undefined) {
+                                document.getElementById(target).innerHTML = xmlhttp.responseText;
+                            }
+                        }
+                    }
+                    xmlhttp.send(queryStr);
+                }
+            }
+
+
+            function isNumber(evt) {
+                evt = (evt) ? evt : window.event;
+                var charCode = (evt.which) ? evt.which : evt.keyCode;
+                if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                    return false;
+                }
+                return true;
+            }
+
+        </script>
+        <script type="text/javascript">
+
+            function file_upload()
+            {
+                var imgpath = document.getElementById('InputFile').value;
+                if (imgpath == "")
+                {
+                    alert("upload your Image file");
+                    document.file.word.focus();
+                    return false;
+                }
+                else
+                {
+// code to get File Extension..
+
+                    var arr1 = new Array;
+                    arr1 = imgpath.split("\\");
+                    var len = arr1.length;
+                    var img1 = arr1[len - 1];
+                    var filext = img1.substring(img1.lastIndexOf(".") + 1);
+// Checking Extension
+                    if (filext != "jpg")
+                    {
+                        alert("Invalid File Format Selected");
+                        document.form.word.focus();
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }
+            }
+            function validation()
+        </script>
+
+    </head>
+
+
+    <body style="padding-top:80px;">
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <!a href="http://DMR.gov.in/orfadmin/frmorfrequest.jsp" target="_self"><!img style="padding:8px;margin-left:20px;" src="./DMR-Registration_files/orflogo.png"></a>
+
+        </nav>
+        <aside class="right-side strech">            
+            <section class="content-header">
+                <h1> 
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    
+                    Online Registration System 
+                    
+                </h1>
+
+            </section>
+
+            <section class="container">
+                <div class="row">
+                    <div class="col-xs-12 connectedSortable"> </div>
+                    <!-- /.col --> 
+                </div>
+                <div class="row">
+                    <div class="col-xs-12"> 
+                        <form id="form1" name="form1" action="http://DMR.gov.in/orfadmin/Slvtorfrequest" enctype="multipart/form-data" method="post" role="form" onsubmit="return file_upload();">
+                            <div class="col-md-6">
+                                <div class="box box-primary">
+                                    <div class="box-body">
+                                        
+                                        <ul id="myTab" class="nav nav-tabs">
+                                            <li class="active"><a href="http://DMR.gov.in/orfadmin/?ln=E#org"><strong>Patient Details</strong></a></li>
+                                            <li class=""><a href="http://DMR.gov.in/orfadmin/?ln=E#nodal">Nodal Officer Details</a></li>
+                                        </ul>
+                                        
+
+                                        <div class="tab-content">
+
+                                            <div id="org" class="tab-pane active"> <br>
+                                                <strong style="color:#F00;"></strong><br>
+                                                <strong style="color:#F00;"></strong> 
+                                                <div class="form-group">                                       
+                                                    
+                                                    <label for="hospitalName">Name of Patient/Doctor: <span class="required"> *</span></label>
+                                                    
+
+                                                    <input type="text" class="form-control" id="txtHospitalName" name="txtHospitalName" placeholder="Patient/Doctor Name " required>
+                                                </div>
+                                                <div class="form-group width48" style="margin-right:4%;">
+                                                    
+                                                    <label for="ddl_hospital_type"> Type Doctor<span class="required"> *</span>  </label> 
+                                                    
+
+                                                    <select class="form-control" id="ddl_hospital_type" name="ddl_hospital_type" required>
+                                                        <option value="">-Select Patient Type-</option><option value="1">PHC</option><option value="2">CHC</option><option value="3">District hospital</option><option value="4">Medical College</option><option value="5">Specialised Hospital</option><option value="6">Super Speciality</option><option value="7">General Hospital</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group width48" style="">
+                                                    
+                                                    <label for="ddl_Govt_type">Goverment: <span class="required"> *</span>  </label>
+                                                    
+
+                                                    <select class="form-control" id="ddl_Govt_type" name="ddl_Govt_type" required>
+                                                        <option value="">-Select Category Of Hospital-</option><option value="1">Central</option><option value="2">State</option><option value="3">Autonomous Body</option><option value="4">Society</option><option value="5">Cooperative</option>
+                                                    </select>
+                                                </div>                                      
+
+                                                <div class="form-group">
+                                                    
+                                                    <label for="txt_hospital_address"> Address :</label>     
+                                                    
+
+                                                    <textarea name="txt_hospital_address" id="txt_hospital_address" class="form-control " rows="2" placeholder="Patient/Hospital Address "></textarea>
+                                                </div>
+
+                                                <div class="form-group width48" style="margin-right:4%;">
+                                                    
+                                                    <label for="ddlState">State in which  Located <span class="required"> *</span>  </label> 
+                                                    
+
+                                                    <select class="form-control" id="ddlState" onchange="return AjaxFillDropdown(this.value, &#39;divdistrict&#39;)" name="ddlState" required>
+                                                        <option value="">-Select State-</option><option value="35">Andaman &amp; Nicobar Islands</option><option value="28">Andhra Pradesh</option><option value="12">Arunachal Pradesh</option><option value="18">Assam</option><option value="10">Bihar</option><option value="4">Chandigarh</option><option value="22">Chhatisgarh</option><option value="26">Dadra &amp; Nagar Haveli</option><option value="25">Daman &amp; Diu</option><option value="7">Delhi</option><option value="30">Goa</option><option value="24">Gujarat</option><option value="6">Haryana</option><option value="2">Himachal Pradesh</option><option value="1">Jammu and Kashmir </option><option value="20">Jharkhand</option><option value="29">Karnataka</option><option value="32">Kerala</option><option value="31">Lakshadweep</option><option value="23">Madhya Pradesh</option><option value="27">Maharashtra</option><option value="14">Manipur</option><option value="17">Meghalaya</option><option value="15">Mizoram</option><option value="13">Nagaland</option><option value="21">Odisha</option><option value="34">Puducherry</option><option value="3">Punjab</option><option value="8">Rajasthan</option><option value="11">Sikkim</option><option value="33">Tamil Nadu</option><option value="36">Telangana</option><option value="16">Tripura</option><option value="5">Uttarakhand</option><option value="9">Uttar Pradesh</option><option value="19">West Bengal</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group width48" style="">
+                                                    
+                                                    <label for="ddldist">District in which  Located <span class="required"> *</span>  </label>
+                                                    
+
+                                                    <div id="divdistrict"><select class="form-control" id="ddldist" name="ddldist" required>
+                                                            <option value="0">--Select District--</option>
+                                                        </select>
+                                                    </div>
+                                                </div> 
+
+                                                <div class="form-group">
+                                                    
+                                                    
+                                                                                                    
+                                                </div>
+                                                <div class="form-group">
+                                                    
+                                                    
+                                                    
+
+                                                    <label>
+                                                        <input type="radio" name="rbHmsDiployes" value="Yes" onchange="if (this.checked) {
+                                                                    document.getElementById(&#39;divNOS&#39;).style.display = &#39;block&#39;;
+                                                                    document.getElementById(&#39;divNOSO&#39;).style.display = &#39;block&#39;;
+                                                                } else {
+                                                                    document.getElementById(&#39;divNOS&#39;).style.display = &#39;none&#39;;
+                                                                    document.getElementById(&#39;divNOSO&#39;).style.display = &#39;none&#39;;
+                                                                }">
+                                                         Yes</label>
+                                                    <label>
+                                                        <input type="radio" name="rbHmsDiployes" value="No" onchange="if (this.checked) {
+                                                                    document.getElementById(&#39;divNOS&#39;).style.display = &#39;none&#39;;
+                                                                    document.getElementById(&#39;divNOSO&#39;).style.display = &#39;none&#39;;
+                                                                } else {
+                                                                    document.getElementById(&#39;divNOS&#39;).style.display = &#39;block&#39;;
+                                                                    document.getElementById(&#39;divNOSO&#39;).style.display = &#39;block&#39;;
+                                                                }">
+                                                         No</label>
+                                                </div>
+
+                                                <div class="form-group" id="divNOS" style="display:none;">
+                                                    
+                                                    <label for="txtHMISprd">If yes, Name of the Hospital Management system already Deployed</label>  
+                                                    
+
+                                                    <input type="text" class="form-control" id="txtHMISprd" name="txtHMISprd" placeholder="Name of the Product ">
+                                                </div>
+                                                <div class="form-group" id="divNOSO" style="display:none;">
+                                                    
+                                                    <label for="txtHMISOrg">Name of the Organization, who developed HMIS Solution</label>
+                                                    
+
+                                                    <input type="text" class="form-control" id="txtHMISOrg" name="txtHMISOrg" placeholder="Developed HMIS Solution ">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    
+                                                    <label for="txtNOPD">Average Number of OPD Registrations per day</label>
+                                                  <input type="text" class="form-control" id="txtNOPD" name="txtNOPD" autocomplete="off" placeholder=" Number of OPD Registrations" onKeyPress="return isNumber(event);">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    
+                                                    <label for="txtNODoc">Number of Doct DMR in the Hospital</label>
+                                                    
+
+                                                    <input type="text" class="form-control" id="txtNODoc" name="txtNODoc" autocomplete="off" placeholder=" Number of DoctDMR" onkeypress="return isNumber(event);">
+                                                </div>
+                                                <div class="box-footer">
+                                                    
+                                                    <button id="next" class="btn btn-primary" type="button" onclick="return validation();">Next</button>
+                                                 <a href=".\DMR-Home.html" class="button">Home</a>
+                                                    
+                                                    
+
+                                                    <input name="hdrequest" id="hdrequest" type="hidden" value="orf_admin">
+                                                </div>
+                                            </div>
+                                            <div id="nodal" class="tab-pane"> <br>
+
+                                                <div class="form-group" style="display:none;">
+
+                                                    <label for="txtNodalOffc">Nodal Officer Details</label>
+                                                    <input type="text" class="form-control" id="txtNodalOffc" name="txtNodalOffc" placeholder=" Nodal Officer Details">
+                                                </div>
+                                                <div class="form-group">
+                                                    
+                                                    <label for="txtName">Nodal Officer Name<span class="required"> *</span> :</label>
+                                                    
+
+                                                    <input type="text" class="form-control" id="txtName" name="txtName" placeholder=" Name" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    
+                                                    <label for="txtDesignation">Designation<span class="required"> *</span>:</label>
+                                                    
+
+                                                    <input type="text" class="form-control" id="txtDesignation" name="txtDesignation" placeholder="Designation " required>
+                                                </div>
+                                                <div class="form-group">
+                                                    
+                                                    <label for="txtMobileNo">Mobile Number<span class="required"> *</span> :</label>
+                                                    
+
+                                                    <input type="text" class="form-control" id="txtMobileNo" name="txtMobileNo" placeholder="Mobile Number " autocomplete="off" required pattermobile="" numbern="[7-9]{1}[0-9]{9}" maxlength="10">
+                                                </div>
+                                                <div class="form-group">
+                                                    
+                                                    <label for="txtPhoneNo">Land Line Number:</label>
+                                                    
+
+                                                    <input type="text" class="form-control" id="txtPhoneNo" name="txtPhoneNo" placeholder="e.g-0381-222-1234" autocomplete="off"> 
+                                                </div>
+
+                                                <div class="form-group">
+                                                    
+                                                    <label for="txtEmail">E-mail Address<span class="required"> *</span> :</label>
+                                                    
+
+                                                    <input type="email" class="form-control" id="txtEmail" name="txtEmail" autocomplete="off" placeholder="example@domainname.com" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    
+                                                    <label for="txtHeadName">Name of Hospital Head</label>
+                                                    
+
+                                                    <input type="text" class="form-control" id="txtHeadName" name="txtHeadName" placeholder="Hospital Head ">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    
+                                                    <label for="InputFile">File input <small>(.jpg format and file size upto 200KB only)</small><span class="required"> *</span> </label>
+                                                    
+
+                                                    <div id="fileInput"><input id="InputFile" name="InputFile" class="btn" required type="file" onchange="load_image(this.id, this.value)"></div>
+                                                        
+                                                    <p>* Attach soft copy of Stamped And Signed Hospital On-boarding Form.</p>
+                                                    
+
+                                                </div>
+
+                                                <div class="form-group">
+                                                    
+                                                    <label for="captcha">Enter the code exactly as it appears: <span class="required"> * </span></label>
+                                                    
+
+                                                    <img alt="CAPTCHA Image" src="./DMR-Registration_files/Cap_Img.jsp" id="captcha">&nbsp;&nbsp;<a id="change-image" onclick="document.getElementById(&#39;captcha&#39;).src = &#39;Cap_Img.jsp?&#39; + Math.random();
+                                                            document.getElementById(&#39;captcha&#39;).focus();" href="javascript:void(0)" class="small">
+                                                        
+                                                        Not readable
+                                                        </a>
+                                                    <input type="text" required placeholder="Confirmation Code." id="captcha_code" name="captcha_code" class="form-control">
+
+                                                    <div style="color:#F00;"></div>
+                                                </div>
+
+                                                <div class="box-footer">
+                                                    
+                                                    <button class="btn btn-primary" type="submit">Submit</button>
+                                                    
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-6"> 
+
+                                <!-- Default box -->
+                                <div class="box">
+                                    <div class="box-body"> 
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                
+                                                <div class="row">
+                                                    <div class="col-md-12"></div>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                
+                                                
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- /.box-body -->
+                                    <div class="box-footer"> </div>
+                                    <!-- /.box-footer--> 
+                                </div>
+
+                            </div>
+                            <div class="row"></div>                     
+                        </form>
+                    </div>
+                </div>
+
+            </section>
+
+        </aside>
+        <section id="footer">
+            <div class="container">
+                <p>© Copyright 2015.</p>
+            </div><!--CONTAINER--> 
+
+            <div class="clearfix"></div>
+
+        </section>
+
+
+
+    
+    <script type="text/javascript">
+        function load_image(id, ext)
+        {
+            if (validateExtension(ext) == false)
+            {
+                alert("upload only JPEG or JPG format ");
+                document.getElementById("fileInput").innerHTML = "<input id='file' type='file' onChange='load_image(this.id,this.value)'>";
+                document.getElementById("file").focus();
+                return;
+            }
+        }
+
+        function validateExtension(v)
+        {
+            var allowedExtensions = new Array("jpg", "JPG", "jpeg", "JPEG");
+            for (var ct = 0; ct < allowedExtensions.length; ct++)
+            {
+                sample = v.lastIndexOf(allowedExtensions[ct]);
+                if (sample != -1) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    </script>
+    <script>
+        $(function () {
+            $('#myTab a:first').tab('show');
+            $('#myTab a').click(function (e) {
+                e.preventDefault();
+                $(this).tab('show');
+            });
+            $('#next').click(function (e) {
+                $("#organizationName").val($("#organizationId option:selected").text());
+                e.preventDefault();
+                $('#myTab a:last').tab('show');
+                $('#txtName').focus();
+
+            });
+        });
+
+
+    </script>
+
+</body></html>

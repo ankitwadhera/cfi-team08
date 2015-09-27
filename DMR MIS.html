@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html class="global xlarge"><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252"><meta name="viewport" content="user-scalable=yes,width=device-width,initial-scale=1"><style type="text/css">html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}table{border-collapse:collapse;border-spacing:0}body{-webkit-text-size-adjust:none}</style><style type="text/css">*,*:before,*:after{-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box}</style><meta name="viewport" content="initial-scale=1">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, Chrome=1">
+
+        <meta name="keywords" content="">
+        <meta name="description" content="">
+
+        <link href="./DMR MIS_files/stylesheet.css" rel="stylesheet" type="text/css" media="all">
+
+        <link href="./DMR MIS_files/font-awesome.min.css" rel="stylesheet" type="text/css" media="all">
+        <link href="./DMR MIS_files/menu.css" rel="stylesheet" type="text/css" media="all">
+
+        <!--SLIDER-->
+        <link rel="stylesheet" type="text/css" href="./DMR MIS_files/flexslider.css">
+
+
+        <!-- animated-css -->
+        <link href="./DMR MIS_files/animate.css" rel="stylesheet" type="text/css" media="all">
+        <script src="./DMR MIS_files/wow.min.js"></script>      
+
+        <!--SKEl-->
+        <link rel="stylesheet" href="./DMR MIS_files/skel.css">
+        <link rel="stylesheet" href="./DMR MIS_files/style.css">
+        <link rel="stylesheet" href="./DMR MIS_files/style-xlarge.css">
+        <link href="./DMR MIS_files/login.css" rel="stylesheet" type="text/css" media="all">
+        <script src="./DMR MIS_files/amcharts.js" type="text/javascript"></script>
+        <script src="./DMR MIS_files/serial.js" type="text/javascript"></script>
+        <title>DMR MIS</title>
+        <script>
+
+            function getXMLObject()//XML OBJECT
+            {
+                var xmlHttp = false;
+                try {
+                    xmlHttp = new ActiveXObject("Msxml2.XMLHTTP")  // For Old Microsoft Browsers
+                }
+                catch (e) {
+                    try {
+                        xmlHttp = new ActiveXObject("Microsoft.XMLHTTP")  // For Microsoft IE 6.0+
+                    }
+                    catch (e2) {
+                        xmlHttp = false   // No Browser accepts the XMLHTTP Object then false
+                    }
+                }
+                if (!xmlHttp && typeof XMLHttpRequest != 'undefined') {
+                    xmlHttp = new XMLHttpRequest(); //For Mozilla, Opera Browsers
+                }
+                return xmlHttp; // Mandatory Statement returning the ajax object created
+            }
+
+            function setAjaxHeader(xmlhttp, URL, tempqueryStr, Flag) {
+                xmlhttp.open("POST", URL, Flag);
+                xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=UTF-8");
+                xmlhttp.setRequestHeader("Content-length", tempqueryStr.length);
+                xmlhttp.setRequestHeader("Connection", "close");
+            }
+
+            function getDashboard_count() {
+                var hos_id = 0;
+                if (document.getElementById("ddlhospital") != null) {
+                    hos_id = document.getElementById("ddlhospital").value;
+                    try {
+                        var tmp = hos_id.split("~")[0];
+                        hos_id = tmp;
+                    } catch (err) {
+                        hos_id = 0;
+                    }
+                }
+                var queryStr = "flagType=2&page_id=1&hos_id=0";
+                var xmlhttp_get = new getXMLObject();
+                setAjaxHeader(xmlhttp_get, "/DMRmis/slvt_Appointment", queryStr, false);
+                xmlhttp_get.onreadystatechange = function()
+                {
+                    if (xmlhttp_get.readyState === 4 && xmlhttp_get.status === 200)
+                    {
+                        var result = xmlhttp_get.responseText;
+                        document.getElementById("dsb1").innerHTML = result.split("~")[0];
+                        document.getElementById("dsb2").innerHTML = result.split("~")[1];
+                        document.getElementById("dsb3").innerHTML = result.split("~")[2];
+                        document.getElementById("dsbdept").innerHTML = result.split("~")[4];
+                    }
+                }
+                xmlhttp_get.send(queryStr);
+            }
+        </script>
+        <style>
+            .CSSTableGenerator {
+                margin:0px;padding:0px;
+                width:100%;
+                box-shadow: 10px 10px 5px #888888;              
+
+                -moz-border-radius-bottomleft:2px;
+                -webkit-border-bottom-left-radius:2px;
+                border-bottom-left-radius:2px;
+
+                -moz-border-radius-bottomright:2px;
+                -webkit-border-bottom-right-radius:2px;
+                border-bottom-right-radius:2px;
+
+                -moz-border-radius-topright:2px;
+                -webkit-border-top-right-radius:2px;
+                border-top-right-radius:2px;
+
+                -moz-border-radius-topleft:2px;
+                -webkit-border-top-left-radius:2px;
+                border-top-left-radius:2px;
+
+            }
+        </style>
+
+        
+    <style type="text/css">.row{border-bottom:solid 1px transparent}.row>*{float:left}.row:after,.row:before{content:"";display:block;clear:both;height:0}.row.uniform>*>:first-child{margin-top:0}.row.uniform>*>:last-child{margin-bottom:0}.\31 2u,.\31 2u\24{width:100%;clear:none;margin-left:0}.\31 1u,.\31 1u\24{width:91.6666666667%;clear:none;margin-left:0}.\31 0u,.\31 0u\24{width:83.3333333333%;clear:none;margin-left:0}.\39 u,.\39 u\24{width:75%;clear:none;margin-left:0}.\38 u,.\38 u\24{width:66.6666666667%;clear:none;margin-left:0}.\37 u,.\37 u\24{width:58.3333333333%;clear:none;margin-left:0}.\36 u,.\36 u\24{width:50%;clear:none;margin-left:0}.\35 u,.\35 u\24{width:41.6666666667%;clear:none;margin-left:0}.\34 u,.\34 u\24{width:33.3333333333%;clear:none;margin-left:0}.\33 u,.\33 u\24{width:25%;clear:none;margin-left:0}.\32 u,.\32 u\24{width:16.6666666667%;clear:none;margin-left:0}.\31 u,.\31 u\24{width:8.3333333333%;clear:none;margin-left:0}.\31 2u\24+*,.\31 1u\24+*,.\31 0u\24+*,.\39 u\24+*,.\38 u\24+*,.\37 u\24+*,.\36 u\24+*,.\35 u\24+*,.\34 u\24+*,.\33 u\24+*,.\32 u\24+*,.\31 u\24+*{clear:left;}.\-11u{margin-left:91.6666666667%}.\-10u{margin-left:83.3333333333%}.\-9u{margin-left:75%}.\-8u{margin-left:66.6666666667%}.\-7u{margin-left:58.3333333333%}.\-6u{margin-left:50%}.\-5u{margin-left:41.6666666667%}.\-4u{margin-left:33.3333333333%}.\-3u{margin-left:25%}.\-2u{margin-left:16.6666666667%}.\-1u{margin-left:8.3333333333%}</style><style type="text/css">.container{margin-left:auto;margin-right:auto;width:1200px}.container.\31 25\25{width:100%;max-width:1500px;min-width:1200px}.container.\37 5\25{width:900px}.container.\35 0\25{width:600px}.container.\32 5\25{width:300px}</style><style type="text/css">.row>*{padding:0px 0 0 2em}.row{margin:0px 0 -1px -2em}.row.uniform>*{padding:2em 0 0 2em}.row.uniform{margin:-2em 0 -1px -2em}.row.\32 00\25>*{padding:0px 0 0 4em}.row.\32 00\25{margin:0px 0 -1px -4em}.row.uniform.\32 00\25>*{padding:4em 0 0 4em}.row.uniform.\32 00\25{margin:-4em 0 -1px -4em}.row.\31 50\25>*{padding:0px 0 0 3em}.row.\31 50\25{margin:0px 0 -1px -3em}.row.uniform.\31 50\25>*{padding:3em 0 0 3em}.row.uniform.\31 50\25{margin:-3em 0 -1px -3em}.row.\35 0\25>*{padding:0px 0 0 1em}.row.\35 0\25{margin:0px 0 -1px -1em}.row.uniform.\35 0\25>*{padding:1em 0 0 1em}.row.uniform.\35 0\25{margin:-1em 0 -1px -1em}.row.\32 5\25>*{padding:0px 0 0 0.5em}.row.\32 5\25{margin:0px 0 -1px -0.5em}.row.uniform.\32 5\25>*{padding:0.5em 0 0 0.5em}.row.uniform.\32 5\25{margin:-0.5em 0 -1px -0.5em}.row.\30 \25>*{padding:0}.row.\30 \25{margin:0 0 -1px 0}</style><style type="text/css">.\31 2u\28 global\29,.\31 2u\24\28 global\29{width:100%;clear:none;margin-left:0}.\31 1u\28 global\29,.\31 1u\24\28 global\29{width:91.6666666667%;clear:none;margin-left:0}.\31 0u\28 global\29,.\31 0u\24\28 global\29{width:83.3333333333%;clear:none;margin-left:0}.\39 u\28 global\29,.\39 u\24\28 global\29{width:75%;clear:none;margin-left:0}.\38 u\28 global\29,.\38 u\24\28 global\29{width:66.6666666667%;clear:none;margin-left:0}.\37 u\28 global\29,.\37 u\24\28 global\29{width:58.3333333333%;clear:none;margin-left:0}.\36 u\28 global\29,.\36 u\24\28 global\29{width:50%;clear:none;margin-left:0}.\35 u\28 global\29,.\35 u\24\28 global\29{width:41.6666666667%;clear:none;margin-left:0}.\34 u\28 global\29,.\34 u\24\28 global\29{width:33.3333333333%;clear:none;margin-left:0}.\33 u\28 global\29,.\33 u\24\28 global\29{width:25%;clear:none;margin-left:0}.\32 u\28 global\29,.\32 u\24\28 global\29{width:16.6666666667%;clear:none;margin-left:0}.\31 u\28 global\29,.\31 u\24\28 global\29{width:8.3333333333%;clear:none;margin-left:0}.\31 2u\24\28 global\29+*,.\31 1u\24\28 global\29+*,.\31 0u\24\28 global\29+*,.\39 u\24\28 global\29+*,.\38 u\24\28 global\29+*,.\37 u\24\28 global\29+*,.\36 u\24\28 global\29+*,.\35 u\24\28 global\29+*,.\34 u\24\28 global\29+*,.\33 u\24\28 global\29+*,.\32 u\24\28 global\29+*,.\31 u\24\28 global\29+*{clear:left;}.\-11u\28 global\29{margin-left:91.6666666667%}.\-10u\28 global\29{margin-left:83.3333333333%}.\-9u\28 global\29{margin-left:75%}.\-8u\28 global\29{margin-left:66.6666666667%}.\-7u\28 global\29{margin-left:58.3333333333%}.\-6u\28 global\29{margin-left:50%}.\-5u\28 global\29{margin-left:41.6666666667%}.\-4u\28 global\29{margin-left:33.3333333333%}.\-3u\28 global\29{margin-left:25%}.\-2u\28 global\29{margin-left:16.6666666667%}.\-1u\28 global\29{margin-left:8.3333333333%}.\31 2u\28 xlarge\29,.\31 2u\24\28 xlarge\29{width:100%;clear:none;margin-left:0}.\31 1u\28 xlarge\29,.\31 1u\24\28 xlarge\29{width:91.6666666667%;clear:none;margin-left:0}.\31 0u\28 xlarge\29,.\31 0u\24\28 xlarge\29{width:83.3333333333%;clear:none;margin-left:0}.\39 u\28 xlarge\29,.\39 u\24\28 xlarge\29{width:75%;clear:none;margin-left:0}.\38 u\28 xlarge\29,.\38 u\24\28 xlarge\29{width:66.6666666667%;clear:none;margin-left:0}.\37 u\28 xlarge\29,.\37 u\24\28 xlarge\29{width:58.3333333333%;clear:none;margin-left:0}.\36 u\28 xlarge\29,.\36 u\24\28 xlarge\29{width:50%;clear:none;margin-left:0}.\35 u\28 xlarge\29,.\35 u\24\28 xlarge\29{width:41.6666666667%;clear:none;margin-left:0}.\34 u\28 xlarge\29,.\34 u\24\28 xlarge\29{width:33.3333333333%;clear:none;margin-left:0}.\33 u\28 xlarge\29,.\33 u\24\28 xlarge\29{width:25%;clear:none;margin-left:0}.\32 u\28 xlarge\29,.\32 u\24\28 xlarge\29{width:16.6666666667%;clear:none;margin-left:0}.\31 u\28 xlarge\29,.\31 u\24\28 xlarge\29{width:8.3333333333%;clear:none;margin-left:0}.\31 2u\24\28 xlarge\29+*,.\31 1u\24\28 xlarge\29+*,.\31 0u\24\28 xlarge\29+*,.\39 u\24\28 xlarge\29+*,.\38 u\24\28 xlarge\29+*,.\37 u\24\28 xlarge\29+*,.\36 u\24\28 xlarge\29+*,.\35 u\24\28 xlarge\29+*,.\34 u\24\28 xlarge\29+*,.\33 u\24\28 xlarge\29+*,.\32 u\24\28 xlarge\29+*,.\31 u\24\28 xlarge\29+*{clear:left;}.\-11u\28 xlarge\29{margin-left:91.6666666667%}.\-10u\28 xlarge\29{margin-left:83.3333333333%}.\-9u\28 xlarge\29{margin-left:75%}.\-8u\28 xlarge\29{margin-left:66.6666666667%}.\-7u\28 xlarge\29{margin-left:58.3333333333%}.\-6u\28 xlarge\29{margin-left:50%}.\-5u\28 xlarge\29{margin-left:41.6666666667%}.\-4u\28 xlarge\29{margin-left:33.3333333333%}.\-3u\28 xlarge\29{margin-left:25%}.\-2u\28 xlarge\29{margin-left:16.6666666667%}.\-1u\28 xlarge\29{margin-left:8.3333333333%}</style><style type="text/css">.not-global,.not-xlarge{display:none!important}.only-large,.only-medium,.only-small,.only-xsmall{display:none!important}</style><link rel="stylesheet" type="text/css" href="./DMR MIS_files/style.css"><link rel="stylesheet" type="text/css" href="./DMR MIS_files/style-xlarge.css"></head>    
+    <body class=""><div id="skel-layers-wrapper" style="position: relative; left: 0px; right: 0px; top: 0px; backface-visibility: hidden; transition: -webkit-transform 0.5s ease, opacity 0.5s ease;">
+        <section id="header-wrapper">
+            <div id="header_top">
+                <div class="container">
+                    <div class="row">
+                        <div class="6u 12u(small)">
+
+                            <div class="medicare">
+                                <i class="fa fa-plus"></i>
+                                <span>DMR</span>
+                            </div>
+                            <h6 class="logo">Code For India Initiative</h6>
+                        </div>
+                        <div class="6u 12u(small)">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="header" class="container">
+                <div class="row">
+                    <div class="4u 12u(small)">
+                        <a href="http://DMR.gov.in/DMRmis/#" class="logo">
+                            <img src="./DMR MIS_files/emblemimage.jpg" alt="DMR">
+                        </a>
+                    </div>
+
+                    <div class="3u 12u(small)">
+                        <div id="menu">
+                            <nav id="main-menu" class="main-menu">
+                                <ul id="menu-nav" class="sf-menu sf-js-enabled">
+                                    <li><a href="http://DMR.gov.in/DMRmis/login"><i class="fa fa-home hm_ico"></i> <span>Home</span></a></li>
+                                    
+                                </ul><select class="mnav"><option value="#">Navigate to...</option><option value="http://DMR.gov.in/DMRmis/login">  Home</option><option value="http://DMR.gov.in/"> DMR</option></select>
+                                <div class="clearfix"></div>
+                            </nav><!--NAVIGATION-->
+                        </div>
+                    </div>
+
+                    <div class="clearfix 12u"></div>
+                </div>
+                <div class="clearfix"></div>
+            </div> 
+        </section>        
+        <!-- CONTENT -->            
+
+
+        <div class="container">
+            <div class="margin30"></div>           
+            <div class="row"> 
+                <div class="8u 12u(small)">
+                    <ul class="style2">
+                        <li class="row">                          
+                            <div class="10u 11u(small) 10u(xsmall)">
+                                <h3>Administration Module</h3>
+                                <p style="font-size:16px;">It allows the Hospital administrator to configure their appointment system for patient.</p>
+                                <p style="font-size:16px;">    It provides summarize or aggregate information on patient flow of a hospital to support queue management of patient in effective way. </p>
+                            </div>
+                            <div class="12u clearfix"></div>
+                        </li>                           
+                    </ul>
+                </div>
+                <div class="4u 12u(small)">
+                    <div class="card card-container transparent CSSTableGenerator" style="margin-left:0px;margin-top:0px;max-width:100%;" id="loginDIV">                    
+
+                        <div class="head">
+                            <h2>Sign-in</h2>
+                        </div>
+                        <form class="form-signin" id="login_frm" method="post" action="http://DMR.gov.in/DMRmis/login_slvt">
+                            <input type="hidden" name="sys_admin" id="sys_admin" value="0">
+                            <input type="hidden" name="hiddenhos" id="hiddenhos" value="0">
+                            <input type="hidden" name="hiddenhosName" id="hiddenhosName" value="">
+                            <span id="" class="red"></span>
+                            <input type="text" id="inputUser" name="inputUser" class="form-control" placeholder="Username" autofocus required="">
+                            <input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="Password" required="">                        
+
+                            <img id="captcha" src="./DMR MIS_files/Cap_Image" alt="" align="left">
+                            <input type="text" id="inputCap" name="inputCap" class="form-control" placeholder="Enter the code exactly as it appears" required="">
+                            <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" name="signin" onclick="return validateLogin();">Sign in</button>
+                        </form>
+                        <a href="http://DMR.gov.in/DMRmis/forgetpassword.jsp" id="forgotpwd" style="float:left;">Forgot Password?</a>
+                        <a href="http://DMR.gov.in/DMRmis/changepassword.jsp" id="changepwd" style="float:right;">change password?</a>
+
+                    </div><!-- /card-container -->
+                </div>
+            </div>
+            <div class="margin30"></div>           
+            <div class="head">
+                <h2> Statistics</h2>
+                <div class="btm_ico">
+                    <span><img src="./DMR MIS_files/doc_ico.png" alt=""></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="3u 12u(small)">
+                    <div class="box maroonbg">
+                        <div class="row">
+                            <div class="5u">
+                                <div class="hg_ico_box">
+                                    <i class="fa fa-hospital-o"></i>
+                                </div>
+                            </div>
+                            <div class="7u">
+                                <h3 class="txt_right"><span id="dsb1">8</span></h3>
+                            </div>
+
+                            <div class="12u">
+                                <h4>
+                                    <span>Number Of  </span>
+                                    Hospital(s)
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="3u 12u(small)">
+                    <div class="box orangebg">
+                        <div class="row">
+                            <div class="5u">
+                                <div class="hg_ico_box">
+                                    <i class="fa fa-pie-chart"></i>
+                                </div>
+                            </div>
+                            <div class="7u">
+                                <h3 class="txt_right">
+                                    <span id="dsbdept">89</span>
+                                </h3>
+                            </div>
+
+                            <div class="12u">
+                                <h4>
+                                    <span> Online</span>
+                                    Department(s) 
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="3u 12u(small)">
+                    <div class="box yellowbg">
+                        <div class="row">
+                            <div class="5u">
+                                <div class="hg_ico_box">
+                                    <i class="fa fa-user-md"></i>
+                                </div>
+                            </div>
+                            <div class="7u">
+                                <h3 class="txt_right"><span id="dsb3">282</span></h3>
+                            </div>
+
+                            <div class="12u">
+                                <h4>
+                                    <span>Online  </span>
+                                    Appointments for today                                       
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="3u 12u(small)">
+                    <div class="box bluebg">
+                        <div class="row">
+                            <div class="5u">
+                                <div class="hg_ico_box">
+                                    <i class="fa fa-users"></i>
+                                </div>
+                            </div>
+                            <div class="7u">
+                                <h3 class="txt_right"><span id="dsb2">61991</span></h3>
+                            </div>
+
+                            <div class="12u">
+                                <h4>
+                                    <span>Total  </span>
+                                    Online Appointments
+                                </h4>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="clearfix 12u"></div>
+
+
+                <div class="12u 12u(xsmall)">
+                    <div class="graph">
+                        <h2>Today's Appointment Statistics</h2>
+                        <div id="chartdiv" style="width: 100%; height: 400px; overflow: hidden; text-align: left;"><div class="amcharts-main-div" style="position: relative;"><div class="amcharts-chart-div" style="overflow: hidden; position: relative; text-align: left; width: 1198px; height: 352px; cursor: default;"><svg version="1.1" style="position: absolute; width: 1198px; height: 352px; left: 0.5px;"><desc>JavaScript chart by amCharts 3.14.2</desc><g><path cs="100,100" d="M0.5,0.5 L1197.5,0.5 L1197.5,351.5 L0.5,351.5 Z" fill="#FFFFFF" stroke="#000000" fill-opacity="0" stroke-width="1" stroke-opacity="0"></path><path cs="100,100" d="M0.5,0.5 L1106.5,0.5 L1106.5,299.5 L0.5,299.5 L0.5,0.5 Z" fill="#FFFFFF" stroke="#000000" fill-opacity="0" stroke-width="1" stroke-opacity="0" transform="translate(71,32)"></path></g><g><g transform="translate(71,32)"><g><rect x="0.5" y="0.5" width="69" height="299" rx="0" ry="0" stroke-width="0" fill="#FAFAFA" stroke="#FAFAFA" fill-opacity="1" stroke-opacity="1" transform="translate(0,0)"></rect></g><g><rect x="0.5" y="0.5" width="69" height="299" rx="0" ry="0" stroke-width="0" fill="#FAFAFA" stroke="#FAFAFA" fill-opacity="1" stroke-opacity="1" transform="translate(138,0)"></rect></g><g><rect x="0.5" y="0.5" width="69" height="299" rx="0" ry="0" stroke-width="0" fill="#FAFAFA" stroke="#FAFAFA" fill-opacity="1" stroke-opacity="1" transform="translate(276,0)"></rect></g><g><rect x="0.5" y="0.5" width="69" height="299" rx="0" ry="0" stroke-width="0" fill="#FAFAFA" stroke="#FAFAFA" fill-opacity="1" stroke-opacity="1" transform="translate(414,0)"></rect></g><g><rect x="0.5" y="0.5" width="69" height="299" rx="0" ry="0" stroke-width="0" fill="#FAFAFA" stroke="#FAFAFA" fill-opacity="1" stroke-opacity="1" transform="translate(553,0)"></rect></g><g><rect x="0.5" y="0.5" width="69" height="299" rx="0" ry="0" stroke-width="0" fill="#FAFAFA" stroke="#FAFAFA" fill-opacity="1" stroke-opacity="1" transform="translate(691,0)"></rect></g><g><rect x="0.5" y="0.5" width="69" height="299" rx="0" ry="0" stroke-width="0" fill="#FAFAFA" stroke="#FAFAFA" fill-opacity="1" stroke-opacity="1" transform="translate(829,0)"></rect></g><g><rect x="0.5" y="0.5" width="69" height="299" rx="0" ry="0" stroke-width="0" fill="#FAFAFA" stroke="#FAFAFA" fill-opacity="1" stroke-opacity="1" transform="translate(967,0)"></rect></g></g><g transform="translate(71,32)" visibility="visible"><g><path cs="100,100" d="M0.5,299.5 L0.5,299.5 L1106.5,299.5" fill="none" stroke-width="1" stroke-dasharray="5" stroke-opacity="0.15" stroke="#000000"></path></g><g><path cs="100,100" d="M0.5,249.5 L0.5,249.5 L1106.5,249.5" fill="none" stroke-width="1" stroke-dasharray="5" stroke-opacity="0.15" stroke="#000000"></path></g><g><path cs="100,100" d="M0.5,199.5 L0.5,199.5 L1106.5,199.5" fill="none" stroke-width="1" stroke-dasharray="5" stroke-opacity="0.15" stroke="#000000"></path></g><g><path cs="100,100" d="M0.5,150.5 L0.5,150.5 L1106.5,150.5" fill="none" stroke-width="1" stroke-dasharray="5" stroke-opacity="0.15" stroke="#000000"></path></g><g><path cs="100,100" d="M0.5,100.5 L0.5,100.5 L1106.5,100.5" fill="none" stroke-width="1" stroke-dasharray="5" stroke-opacity="0.15" stroke="#000000"></path></g><g><path cs="100,100" d="M0.5,50.5 L0.5,50.5 L1106.5,50.5" fill="none" stroke-width="1" stroke-dasharray="5" stroke-opacity="0.15" stroke="#000000"></path></g><g><path cs="100,100" d="M0.5,0.5 L0.5,0.5 L1106.5,0.5" fill="none" stroke-width="1" stroke-dasharray="5" stroke-opacity="0.15" stroke="#000000"></path></g></g></g><g></g><g></g><g></g><g></g><g><g transform="translate(71,32)" opacity="1" visibility="visible"><g></g><g></g><g clip-path="url(#AmChartsEl-3)"><path cs="100,100" d="M35.5,289.5 L104.5,286.5 L173.5,285.5 L242.5,285.5 L311.5,284.5 L380.5,280.5 L449.5,275.5 L518.5,258.5 L588.5,228.5 L657.5,205.5 L726.5,162.5 L795.5,123.5 L864.5,94.5 L933.5,58.5 L1002.5,31.5 L1071.5,20.5 M0,0 L0,0" fill="none" stroke-width="1" stroke-opacity="1" stroke="#FF6600"></path></g><clippath id="AmChartsEl-3"><rect x="0" y="0" width="1108" height="301" rx="0" ry="0" stroke-width="0"></rect></clippath></g></g><g clip-path="url(#AmChartsEl-2)"></g><g><path cs="100,100" d="M0.5,299.5 L1106.5,299.5 L1106.5,299.5" fill="none" stroke-width="1" stroke-dasharray="5" stroke-opacity="0.3" stroke="#000000" transform="translate(71,32)"></path><g><path cs="100,100" d="M0.5,0.5 L1106.5,0.5" fill="none" stroke-width="1" stroke-opacity="0" stroke="#000000" transform="translate(71,32)"></path></g><g><path cs="100,100" d="M0.5,0.5 L0.5,299.5" fill="none" stroke-width="1" stroke-opacity="0" stroke="#000000" transform="translate(71,32)" visibility="visible"></path></g></g><g><g transform="translate(71,32)" visibility="hidden"><path cs="100,100" d="M0.5,0.5 L0.5,0.5 L0.5,299.5" fill="none" stroke-width="1" stroke-opacity="0" stroke="#CC0000" visibility="hidden"></path></g></g><g></g><g><g transform="translate(71,32)" opacity="1" visibility="visible"><path cs="100,100" d="M-3.5,4.5 L4.5,4.5 L4.5,-3.5 L-3.5,-3.5 Z" fill="#FF6600" stroke="#FF6600" fill-opacity="1" stroke-width="2" stroke-opacity="0" transform="translate(35,289)"></path><path cs="100,100" d="M-3.5,4.5 L4.5,4.5 L4.5,-3.5 L-3.5,-3.5 Z" fill="#FF6600" stroke="#FF6600" fill-opacity="1" stroke-width="2" stroke-opacity="0" transform="translate(104,286)"></path><path cs="100,100" d="M-3.5,4.5 L4.5,4.5 L4.5,-3.5 L-3.5,-3.5 Z" fill="#FF6600" stroke="#FF6600" fill-opacity="1" stroke-width="2" stroke-opacity="0" transform="translate(173,285)"></path><path cs="100,100" d="M-3.5,4.5 L4.5,4.5 L4.5,-3.5 L-3.5,-3.5 Z" fill="#FF6600" stroke="#FF6600" fill-opacity="1" stroke-width="2" stroke-opacity="0" transform="translate(242,285)"></path><path cs="100,100" d="M-3.5,4.5 L4.5,4.5 L4.5,-3.5 L-3.5,-3.5 Z" fill="#FF6600" stroke="#FF6600" fill-opacity="1" stroke-width="2" stroke-opacity="0" transform="translate(311,284) scale(1)"></path><path cs="100,100" d="M-3.5,4.5 L4.5,4.5 L4.5,-3.5 L-3.5,-3.5 Z" fill="#FF6600" stroke="#FF6600" fill-opacity="1" stroke-width="2" stroke-opacity="0" transform="translate(380,280) scale(1)"></path><path cs="100,100" d="M-3.5,4.5 L4.5,4.5 L4.5,-3.5 L-3.5,-3.5 Z" fill="#FF6600" stroke="#FF6600" fill-opacity="1" stroke-width="2" stroke-opacity="0" transform="translate(449,275)"></path><path cs="100,100" d="M-3.5,4.5 L4.5,4.5 L4.5,-3.5 L-3.5,-3.5 Z" fill="#FF6600" stroke="#FF6600" fill-opacity="1" stroke-width="2" stroke-opacity="0" transform="translate(518,258)"></path><path cs="100,100" d="M-3.5,4.5 L4.5,4.5 L4.5,-3.5 L-3.5,-3.5 Z" fill="#FF6600" stroke="#FF6600" fill-opacity="1" stroke-width="2" stroke-opacity="0" transform="translate(588,228)"></path><path cs="100,100" d="M-3.5,4.5 L4.5,4.5 L4.5,-3.5 L-3.5,-3.5 Z" fill="#FF6600" stroke="#FF6600" fill-opacity="1" stroke-width="2" stroke-opacity="0" transform="translate(657,205)"></path><path cs="100,100" d="M-3.5,4.5 L4.5,4.5 L4.5,-3.5 L-3.5,-3.5 Z" fill="#FF6600" stroke="#FF6600" fill-opacity="1" stroke-width="2" stroke-opacity="0" transform="translate(726,162)"></path><path cs="100,100" d="M-3.5,4.5 L4.5,4.5 L4.5,-3.5 L-3.5,-3.5 Z" fill="#FF6600" stroke="#FF6600" fill-opacity="1" stroke-width="2" stroke-opacity="0" transform="translate(795,123)"></path><path cs="100,100" d="M-3.5,4.5 L4.5,4.5 L4.5,-3.5 L-3.5,-3.5 Z" fill="#FF6600" stroke="#FF6600" fill-opacity="1" stroke-width="2" stroke-opacity="0" transform="translate(864,94)"></path><path cs="100,100" d="M-3.5,4.5 L4.5,4.5 L4.5,-3.5 L-3.5,-3.5 Z" fill="#FF6600" stroke="#FF6600" fill-opacity="1" stroke-width="2" stroke-opacity="0" transform="translate(933,58)"></path><path cs="100,100" d="M-3.5,4.5 L4.5,4.5 L4.5,-3.5 L-3.5,-3.5 Z" fill="#FF6600" stroke="#FF6600" fill-opacity="1" stroke-width="2" stroke-opacity="0" transform="translate(1002,31)"></path><path cs="100,100" d="M-3.5,4.5 L4.5,4.5 L4.5,-3.5 L-3.5,-3.5 Z" fill="#FF6600" stroke="#FF6600" fill-opacity="1" stroke-width="2" stroke-opacity="0" transform="translate(1071,20)"></path></g></g><g><g transform="translate(71,32)"><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="middle" transform="translate(35,-17)"><tspan y="6" x="0" style="font-size: 11px;">1</tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="middle" transform="translate(104,-17)"><tspan y="6" x="0" style="font-size: 11px;">2</tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="middle" transform="translate(173,-17)"><tspan y="6" x="0" style="font-size: 11px;">3</tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="middle" transform="translate(242,-17)"><tspan y="6" x="0" style="font-size: 11px;">4</tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="middle" transform="translate(311,-17)"><tspan y="6" x="0" style="font-size: 11px;">5</tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="middle" transform="translate(380,-17)"><tspan y="6" x="0" style="font-size: 11px;">6</tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="middle" transform="translate(449,-17)"><tspan y="6" x="0" style="font-size: 11px;">7</tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="middle" transform="translate(518,-17)"><tspan y="6" x="0" style="font-size: 11px;">8</tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="middle" transform="translate(588,-17)"><tspan y="6" x="0" style="font-size: 11px;">9</tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="middle" transform="translate(657,-17)"><tspan y="6" x="0" style="font-size: 11px;">10</tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="middle" transform="translate(726,-17)"><tspan y="6" x="0" style="font-size: 11px;">11</tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="middle" transform="translate(795,-17)"><tspan y="6" x="0" style="font-size: 11px;">12</tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="middle" transform="translate(864,-17)"><tspan y="6" x="0" style="font-size: 11px;">13</tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="middle" transform="translate(933,-17)"><tspan y="6" x="0" style="font-size: 11px;">14</tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="middle" transform="translate(1002,-17)"><tspan y="6" x="0" style="font-size: 11px;">15</tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="middle" transform="translate(1071,-17)"><tspan y="6" x="0" style="font-size: 11px;">16</tspan></text></g><g transform="translate(71,32)" visibility="visible"><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="end" transform="translate(-12,297)"><tspan y="6" x="0" style="font-size: 11px;">0</tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="end" transform="translate(-12,247)"><tspan y="6" x="0" style="font-size: 11px;">50</tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="end" transform="translate(-12,197)"><tspan y="6" x="0" style="font-size: 11px;">100</tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="end" transform="translate(-12,148)"><tspan y="6" x="0" style="font-size: 11px;">150</tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="end" transform="translate(-12,98)"><tspan y="6" x="0" style="font-size: 11px;">200</tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="end" transform="translate(-12,48)"><tspan y="6" x="0" style="font-size: 11px;">250</tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="end" transform="translate(-12,-2)"><tspan y="6" x="0" style="font-size: 11px;">300</tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="12" opacity="1" font-weight="bold" text-anchor="middle" transform="translate(-50,150) rotate(-90)"><tspan y="6" x="0" style="font-size: 12px;">No of Appointments</tspan></text></g></g><g><g></g></g><g></g><g></g><g></g><clippath id="AmChartsEl-2"><rect x="71" y="32" width="1106" height="299" rx="0" ry="0" stroke-width="0"></rect></clippath></svg><a href="" title="JavaScript charts" style="position: absolute; text-decoration: none; color: rgb(0, 0, 0); font-family: Verdana; font-size: 11px; opacity: 0.7; display: block; left: 76px; top: 37px;"></a></div><div class="amChartsLegend amcharts-legend-div" style="overflow: hidden; position: relative; text-align: left; width: 1198px; height: 48px; cursor: default;"><svg version="1.1" style="position: absolute; width: 1198px; height: 48px;"><desc>JavaScript chart by amCharts 3.14.2</desc><g transform="translate(71,0)"><path cs="100,100" d="M0.5,0.5 L1106.5,0.5 L1106.5,37.5 L0.5,37.5 Z" fill="#FFFFFF" stroke="#000000" fill-opacity="0" stroke-width="1" stroke-opacity="0"></path><g transform="translate(0,11)"><g cursor="pointer" transform="translate(0,0)"><g><path cs="100,100" d="M0.5,8.5 L32.5,8.5" fill="none" stroke-width="1" stroke-opacity="1" stroke="#FF6600"></path><path cs="100,100" d="M-3.5,4.5 L4.5,4.5 L4.5,-3.5 L-3.5,-3.5 Z" fill="#FF6600" stroke="#FF6600" fill-opacity="1" stroke-width="2" stroke-opacity="0" transform="translate(17,8)"></path></g><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="start" transform="translate(37,7)"><tspan y="6" x="0" style="font-size: 11px;">Total</tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="end" transform="translate(104,7)"> </text><rect x="32" y="0" width="88" height="18" rx="0" ry="0" stroke-width="0" stroke="none" fill="#fff" fill-opacity="0.005"></rect></g></g></g></svg></div></div></div>
+                    </div>
+
+                </div>
+
+                <div class="12u 12u(xsmall)">
+                    <div class="graph">
+                        <h2>Online Appointment Taken During Last 20 Days</h2>
+                        <div id="chartdiv1" style="width: 100%; height: 400px; overflow: hidden; text-align: left;"><div class="amcharts-main-div" style="position: relative;"><div class="amcharts-chart-div" style="overflow: hidden; position: relative; text-align: left; width: 1198px; height: 352px; cursor: default;"><svg version="1.1" style="position: absolute; width: 1198px; height: 352px; left: 0.5px;"><desc>JavaScript chart by amCharts 3.14.2</desc><g><path cs="100,100" d="M0.5,0.5 L1197.5,0.5 L1197.5,351.5 L0.5,351.5 Z" fill="#FFFFFF" stroke="#000000" fill-opacity="0" stroke-width="1" stroke-opacity="0"></path><path cs="100,100" d="M0.5,0.5 L1134.5,0.5 L1134.5,321.5 L0.5,321.5 L0.5,0.5 Z" fill="#FFFFFF" stroke="#000000" fill-opacity="0" stroke-width="1" stroke-opacity="0" transform="translate(29,0)"></path></g><g><g transform="translate(29,0)"><g><path cs="100,100" d="M0.5,0.5 L0.5,5.5" fill="none" stroke-width="1" stroke-opacity="1" stroke="#555555" transform="translate(0,321)"></path></g><g><path cs="100,100" d="M54.5,0.5 L54.5,5.5" fill="none" stroke-width="1" stroke-opacity="1" stroke="#555555" transform="translate(0,321)"></path></g><g><path cs="100,100" d="M108.5,0.5 L108.5,5.5" fill="none" stroke-width="1" stroke-opacity="1" stroke="#555555" transform="translate(0,321)"></path></g><g><path cs="100,100" d="M162.5,0.5 L162.5,5.5" fill="none" stroke-width="1" stroke-opacity="1" stroke="#555555" transform="translate(0,321)"></path></g><g><path cs="100,100" d="M216.5,0.5 L216.5,5.5" fill="none" stroke-width="1" stroke-opacity="1" stroke="#555555" transform="translate(0,321)"></path></g><g><path cs="100,100" d="M270.5,0.5 L270.5,5.5" fill="none" stroke-width="1" stroke-opacity="1" stroke="#555555" transform="translate(0,321)"></path></g><g><path cs="100,100" d="M324.5,0.5 L324.5,5.5" fill="none" stroke-width="1" stroke-opacity="1" stroke="#555555" transform="translate(0,321)"></path></g><g><path cs="100,100" d="M378.5,0.5 L378.5,5.5" fill="none" stroke-width="1" stroke-opacity="1" stroke="#555555" transform="translate(0,321)"></path></g><g><path cs="100,100" d="M432.5,0.5 L432.5,5.5" fill="none" stroke-width="1" stroke-opacity="1" stroke="#555555" transform="translate(0,321)"></path></g><g><path cs="100,100" d="M486.5,0.5 L486.5,5.5" fill="none" stroke-width="1" stroke-opacity="1" stroke="#555555" transform="translate(0,321)"></path></g><g><path cs="100,100" d="M540.5,0.5 L540.5,5.5" fill="none" stroke-width="1" stroke-opacity="1" stroke="#555555" transform="translate(0,321)"></path></g><g><path cs="100,100" d="M594.5,0.5 L594.5,5.5" fill="none" stroke-width="1" stroke-opacity="1" stroke="#555555" transform="translate(0,321)"></path></g><g><path cs="100,100" d="M648.5,0.5 L648.5,5.5" fill="none" stroke-width="1" stroke-opacity="1" stroke="#555555" transform="translate(0,321)"></path></g><g><path cs="100,100" d="M702.5,0.5 L702.5,5.5" fill="none" stroke-width="1" stroke-opacity="1" stroke="#555555" transform="translate(0,321)"></path></g><g><path cs="100,100" d="M756.5,0.5 L756.5,5.5" fill="none" stroke-width="1" stroke-opacity="1" stroke="#555555" transform="translate(0,321)"></path></g><g><path cs="100,100" d="M810.5,0.5 L810.5,5.5" fill="none" stroke-width="1" stroke-opacity="1" stroke="#555555" transform="translate(0,321)"></path></g><g><path cs="100,100" d="M864.5,0.5 L864.5,5.5" fill="none" stroke-width="1" stroke-opacity="1" stroke="#555555" transform="translate(0,321)"></path></g><g><path cs="100,100" d="M918.5,0.5 L918.5,5.5" fill="none" stroke-width="1" stroke-opacity="1" stroke="#555555" transform="translate(0,321)"></path></g><g><path cs="100,100" d="M972.5,0.5 L972.5,5.5" fill="none" stroke-width="1" stroke-opacity="1" stroke="#555555" transform="translate(0,321)"></path></g><g><path cs="100,100" d="M1026.5,0.5 L1026.5,5.5" fill="none" stroke-width="1" stroke-opacity="1" stroke="#555555" transform="translate(0,321)"></path></g><g><path cs="100,100" d="M1080.5,0.5 L1080.5,5.5" fill="none" stroke-width="1" stroke-opacity="1" stroke="#555555" transform="translate(0,321)"></path></g><g><path cs="100,100" d="M1134.5,0.5 L1134.5,5.5" fill="none" stroke-width="1" stroke-opacity="1" stroke="#555555" transform="translate(0,321)"></path></g></g><g transform="translate(29,0)" visibility="visible"><g><path cs="100,100" d="M0.5,321.5 L0.5,321.5 L1134.5,321.5" fill="none" stroke-width="1" stroke-opacity="0.05" stroke="#000000"></path></g><g><path cs="100,100" d="M0.5,275.5 L0.5,275.5 L1134.5,275.5" fill="none" stroke-width="1" stroke-opacity="0.05" stroke="#000000"></path></g><g><path cs="100,100" d="M0.5,229.5 L0.5,229.5 L1134.5,229.5" fill="none" stroke-width="1" stroke-opacity="0.05" stroke="#000000"></path></g><g><path cs="100,100" d="M0.5,183.5 L0.5,183.5 L1134.5,183.5" fill="none" stroke-width="1" stroke-opacity="0.05" stroke="#000000"></path></g><g><path cs="100,100" d="M0.5,138.5 L0.5,138.5 L1134.5,138.5" fill="none" stroke-width="1" stroke-opacity="0.05" stroke="#000000"></path></g><g><path cs="100,100" d="M0.5,92.5 L0.5,92.5 L1134.5,92.5" fill="none" stroke-width="1" stroke-opacity="0.05" stroke="#000000"></path></g><g><path cs="100,100" d="M0.5,46.5 L0.5,46.5 L1134.5,46.5" fill="none" stroke-width="1" stroke-opacity="0.05" stroke="#000000"></path></g><g><path cs="100,100" d="M0.5,0.5 L0.5,0.5 L1134.5,0.5" fill="none" stroke-width="1" stroke-opacity="0.05" stroke="#000000"></path></g></g><g transform="translate(29,0)" visibility="visible"></g></g><g></g><g></g><g></g><g><g transform="translate(29,0)"><g transform="translate(5,321)"><path cs="100,100" d="M0.5,0.5 L0.5,-273.5 L43.5,-273.5 L43.5,0.5 L0.5,0.5 Z" fill="#000000" stroke="#000000" fill-opacity="0.1" stroke-width="1" stroke-opacity="0"></path></g><g transform="translate(59,321)"><path cs="100,100" d="M0.5,0.5 L0.5,-282.5 L43.5,-282.5 L43.5,0.5 L0.5,0.5 Z" fill="#000000" stroke="#000000" fill-opacity="0.1" stroke-width="1" stroke-opacity="0"></path></g><g transform="translate(113,321)"><path cs="100,100" d="M0.5,0.5 L0.5,-229.5 L43.5,-229.5 L43.5,0.5 L0.5,0.5 Z" fill="#000000" stroke="#000000" fill-opacity="0.1" stroke-width="1" stroke-opacity="0"></path></g><g transform="translate(167,321)"><path cs="100,100" d="M0.5,0.5 L0.5,-185.5 L43.5,-185.5 L43.5,0.5 L0.5,0.5 Z" fill="#000000" stroke="#000000" fill-opacity="0.1" stroke-width="1" stroke-opacity="0"></path></g><g transform="translate(221,321)"><path cs="100,100" d="M0.5,0.5 L0.5,-144.5 L43.5,-144.5 L43.5,0.5 L0.5,0.5 Z" fill="#000000" stroke="#000000" fill-opacity="0.1" stroke-width="1" stroke-opacity="0"></path></g><g transform="translate(275,321)"><path cs="100,100" d="M0.5,0.5 L0.5,-127.5 L43.5,-127.5 L43.5,0.5 L0.5,0.5 Z" fill="#000000" stroke="#000000" fill-opacity="0.1" stroke-width="1" stroke-opacity="0"></path></g><g transform="translate(329,321)"><path cs="100,100" d="M0.5,0.5 L0.5,-118.5 L43.5,-118.5 L43.5,0.5 L0.5,0.5 Z" fill="#000000" stroke="#000000" fill-opacity="0.1" stroke-width="1" stroke-opacity="0"></path></g><g transform="translate(383,321)"><path cs="100,100" d="M0.5,0.5 L0.5,-193.5 L43.5,-193.5 L43.5,0.5 L0.5,0.5 Z" fill="#000000" stroke="#000000" fill-opacity="0.1" stroke-width="1" stroke-opacity="0"></path></g><g transform="translate(437,321)"><path cs="100,100" d="M0.5,0.5 L0.5,-155.5 L43.5,-155.5 L43.5,0.5 L0.5,0.5 Z" fill="#000000" stroke="#000000" fill-opacity="0.1" stroke-width="1" stroke-opacity="0"></path></g><g transform="translate(491,321)"><path cs="100,100" d="M0.5,0.5 L0.5,-78.5 L43.5,-78.5 L43.5,0.5 L0.5,0.5 Z" fill="#000000" stroke="#000000" fill-opacity="0.1" stroke-width="1" stroke-opacity="0"></path></g><g transform="translate(545,321)"><path cs="100,100" d="M0.5,0.5 L0.5,-120.5 L43.5,-120.5 L43.5,0.5 L0.5,0.5 Z" fill="#000000" stroke="#000000" fill-opacity="0.1" stroke-width="1" stroke-opacity="0"></path></g><g transform="translate(599,321)"><path cs="100,100" d="M0.5,0.5 L0.5,-101.5 L43.5,-101.5 L43.5,0.5 L0.5,0.5 Z" fill="#000000" stroke="#000000" fill-opacity="0.1" stroke-width="1" stroke-opacity="0"></path></g><g transform="translate(653,321)"><path cs="100,100" d="M0.5,0.5 L0.5,-61.5 L43.5,-61.5 L43.5,0.5 L0.5,0.5 Z" fill="#000000" stroke="#000000" fill-opacity="0.1" stroke-width="1" stroke-opacity="0"></path></g><g transform="translate(707,321)"><path cs="100,100" d="M0.5,0.5 L0.5,-91.5 L43.5,-91.5 L43.5,0.5 L0.5,0.5 Z" fill="#000000" stroke="#000000" fill-opacity="0.1" stroke-width="1" stroke-opacity="0"></path></g><g transform="translate(761,321)"><path cs="100,100" d="M0.5,0.5 L0.5,-168.5 L43.5,-168.5 L43.5,0.5 L0.5,0.5 Z" fill="#000000" stroke="#000000" fill-opacity="0.1" stroke-width="1" stroke-opacity="0"></path></g><g transform="translate(815,321)"><path cs="100,100" d="M0.5,0.5 L0.5,-156.5 L43.5,-156.5 L43.5,0.5 L0.5,0.5 Z" fill="#000000" stroke="#000000" fill-opacity="0.1" stroke-width="1" stroke-opacity="0"></path></g><g transform="translate(869,321)"><path cs="100,100" d="M0.5,0.5 L0.5,-168.5 L43.5,-168.5 L43.5,0.5 L0.5,0.5 Z" fill="#000000" stroke="#000000" fill-opacity="0.1" stroke-width="1" stroke-opacity="0"></path></g><g transform="translate(923,321)"><path cs="100,100" d="M0.5,0.5 L0.5,-154.5 L43.5,-154.5 L43.5,0.5 L0.5,0.5 Z" fill="#000000" stroke="#000000" fill-opacity="0.1" stroke-width="1" stroke-opacity="0"></path></g><g transform="translate(977,321)"><path cs="100,100" d="M0.5,0.5 L0.5,-135.5 L43.5,-135.5 L43.5,0.5 L0.5,0.5 Z" fill="#000000" stroke="#000000" fill-opacity="0.1" stroke-width="1" stroke-opacity="0"></path></g><g transform="translate(1031,321)"><path cs="100,100" d="M0.5,0.5 L0.5,-128.5 L43.5,-128.5 L43.5,0.5 L0.5,0.5 Z" fill="#000000" stroke="#000000" fill-opacity="0.1" stroke-width="1" stroke-opacity="0"></path></g><g transform="translate(1085,321)"><path cs="100,100" d="M0.5,0.5 L0.5,-36.5 L43.5,-36.5 L43.5,0.5 L0.5,0.5 Z" fill="#000000" stroke="#000000" fill-opacity="0.1" stroke-width="1" stroke-opacity="0"></path></g></g></g><g><g transform="translate(29,0)"><g></g><g></g><g clip-path="url(#AmChartsEl-6)"><path cs="100,100" d="M27.5,47.5 L81.5,38.5 L135.5,91.5 L189.5,135.5 L243.5,176.5 L297.5,193.5 L351.5,202.5 L405.5,127.5 L459.5,165.5 L513.5,242.5 L567.5,200.5 L621.5,219.5 L675.5,259.5 L729.5,229.5 L783.5,152.5 L837.5,164.5 L891.5,152.5 L945.5,166.5 L999.5,185.5 L1053.5,192.5 L1107.5,284.5 M0,0 L0,0" fill="none" stroke-width="1" stroke-opacity="1" stroke="#CC0000"></path></g><clippath id="AmChartsEl-6"><rect x="0" y="0" width="1136" height="323" rx="0" ry="0" stroke-width="0"></rect></clippath></g><g transform="translate(29,0)"><g></g></g></g><g clip-path="url(#AmChartsEl-5)"></g><g><g><path cs="100,100" d="M0.5,0.5 L1134.5,0.5" fill="none" stroke-width="1" stroke-opacity="1" stroke="#555555" transform="translate(29,321)"></path></g><g><path cs="100,100" d="M0.5,0.5 L0.5,321.5" fill="none" stroke-width="1" stroke-opacity="0" stroke="#000000" transform="translate(29,0)" visibility="visible"></path></g><g><path cs="100,100" d="M0.5,0.5 L0.5,321.5 L0.5,321.5" fill="none" stroke-width="1" stroke-opacity="0" stroke="#000000" transform="translate(1163,0)" visibility="visible"></path></g></g><g><g transform="translate(29,0)" visibility="hidden"><path cs="100,100" d="M0.5,0.5 L0.5,0.5 L0.5,321.5" fill="none" stroke-width="1" stroke-opacity="0" stroke="#CC0000" visibility="hidden"></path><path cs="100,100" d="M0.5,0.5 L1134.5,0.5 L1134.5,0.5" fill="none" stroke-width="1" stroke-opacity="0" stroke="#CC0000" visibility="hidden" transform="translate(0,167)"></path></g></g><g></g><g><g transform="translate(29,0)"><circle r="4" cx="0" cy="0" fill="#CC0000" stroke="#CC0000" fill-opacity="1" stroke-width="1" stroke-opacity="1" transform="translate(27,47)"></circle><circle r="4" cx="0" cy="0" fill="#CC0000" stroke="#CC0000" fill-opacity="1" stroke-width="1" stroke-opacity="1" transform="translate(81,38)"></circle><circle r="4" cx="0" cy="0" fill="#CC0000" stroke="#CC0000" fill-opacity="1" stroke-width="1" stroke-opacity="1" transform="translate(135,91)"></circle><circle r="4" cx="0" cy="0" fill="#CC0000" stroke="#CC0000" fill-opacity="1" stroke-width="1" stroke-opacity="1" transform="translate(189,135)"></circle><circle r="4" cx="0" cy="0" fill="#CC0000" stroke="#CC0000" fill-opacity="1" stroke-width="1" stroke-opacity="1" transform="translate(243,176)"></circle><circle r="4" cx="0" cy="0" fill="#CC0000" stroke="#CC0000" fill-opacity="1" stroke-width="1" stroke-opacity="1" transform="translate(297,193)"></circle><circle r="4" cx="0" cy="0" fill="#CC0000" stroke="#CC0000" fill-opacity="1" stroke-width="1" stroke-opacity="1" transform="translate(351,202)"></circle><circle r="4" cx="0" cy="0" fill="#CC0000" stroke="#CC0000" fill-opacity="1" stroke-width="1" stroke-opacity="1" transform="translate(405,127)"></circle><circle r="4" cx="0" cy="0" fill="#CC0000" stroke="#CC0000" fill-opacity="1" stroke-width="1" stroke-opacity="1" transform="translate(459,165) scale(1)"></circle><circle r="4" cx="0" cy="0" fill="#CC0000" stroke="#CC0000" fill-opacity="1" stroke-width="1" stroke-opacity="1" transform="translate(513,242)"></circle><circle r="4" cx="0" cy="0" fill="#CC0000" stroke="#CC0000" fill-opacity="1" stroke-width="1" stroke-opacity="1" transform="translate(567,200)"></circle><circle r="4" cx="0" cy="0" fill="#CC0000" stroke="#CC0000" fill-opacity="1" stroke-width="1" stroke-opacity="1" transform="translate(621,219)"></circle><circle r="4" cx="0" cy="0" fill="#CC0000" stroke="#CC0000" fill-opacity="1" stroke-width="1" stroke-opacity="1" transform="translate(675,259)"></circle><circle r="4" cx="0" cy="0" fill="#CC0000" stroke="#CC0000" fill-opacity="1" stroke-width="1" stroke-opacity="1" transform="translate(729,229)"></circle><circle r="4" cx="0" cy="0" fill="#CC0000" stroke="#CC0000" fill-opacity="1" stroke-width="1" stroke-opacity="1" transform="translate(783,152)"></circle><circle r="4" cx="0" cy="0" fill="#CC0000" stroke="#CC0000" fill-opacity="1" stroke-width="1" stroke-opacity="1" transform="translate(837,164)"></circle><circle r="4" cx="0" cy="0" fill="#CC0000" stroke="#CC0000" fill-opacity="1" stroke-width="1" stroke-opacity="1" transform="translate(891,152)"></circle><circle r="4" cx="0" cy="0" fill="#CC0000" stroke="#CC0000" fill-opacity="1" stroke-width="1" stroke-opacity="1" transform="translate(945,166)"></circle><circle r="4" cx="0" cy="0" fill="#CC0000" stroke="#CC0000" fill-opacity="1" stroke-width="1" stroke-opacity="1" transform="translate(999,185)"></circle><circle r="4" cx="0" cy="0" fill="#CC0000" stroke="#CC0000" fill-opacity="1" stroke-width="1" stroke-opacity="1" transform="translate(1053,192)"></circle><circle r="4" cx="0" cy="0" fill="#CC0000" stroke="#CC0000" fill-opacity="1" stroke-width="1" stroke-opacity="1" transform="translate(1107,284)"></circle></g><g transform="translate(29,0)"></g></g><g><g transform="translate(29,0)"><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="middle" transform="translate(27,334)"><tspan y="6" x="0" style="font-size: 11px;">Sep 07</tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="middle" transform="translate(81,334)"><tspan y="6" x="0" style="font-size: 11px;">Sep 08</tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="middle" transform="translate(135,334)"><tspan y="6" x="0" style="font-size: 11px;">Sep 09</tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="middle" transform="translate(189,334)"><tspan y="6" x="0" style="font-size: 11px;">Sep 10</tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="middle" transform="translate(243,334)"><tspan y="6" x="0" style="font-size: 11px;">Sep 11</tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="middle" transform="translate(297,334)"><tspan y="6" x="0" style="font-size: 11px;">Sep 12</tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="middle" transform="translate(351,334)"><tspan y="6" x="0" style="font-size: 11px;">Sep 13</tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="middle" transform="translate(405,334)"><tspan y="6" x="0" style="font-size: 11px;">Sep 14</tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="middle" transform="translate(459,334)"><tspan y="6" x="0" style="font-size: 11px;">Sep 15</tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="middle" transform="translate(513,334)"><tspan y="6" x="0" style="font-size: 11px;">Sep 16</tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="middle" transform="translate(567,334)"><tspan y="6" x="0" style="font-size: 11px;">Sep 17</tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="middle" transform="translate(621,334)"><tspan y="6" x="0" style="font-size: 11px;">Sep 18</tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="middle" transform="translate(675,334)"><tspan y="6" x="0" style="font-size: 11px;">Sep 19</tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="middle" transform="translate(729,334)"><tspan y="6" x="0" style="font-size: 11px;">Sep 20</tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="middle" transform="translate(783,334)"><tspan y="6" x="0" style="font-size: 11px;">Sep 21</tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="middle" transform="translate(837,334)"><tspan y="6" x="0" style="font-size: 11px;">Sep 22</tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="middle" transform="translate(891,334)"><tspan y="6" x="0" style="font-size: 11px;">Sep 23</tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="middle" transform="translate(945,334)"><tspan y="6" x="0" style="font-size: 11px;">Sep 24</tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="middle" transform="translate(999,334)"><tspan y="6" x="0" style="font-size: 11px;">Sep 25</tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="middle" transform="translate(1053,334)"><tspan y="6" x="0" style="font-size: 11px;">Sep 26</tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="middle" transform="translate(1107,334)"><tspan y="6" x="0" style="font-size: 11px;">Sep 27</tspan></text></g><g transform="translate(29,0)" visibility="visible"><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="start" transform="translate(9,313)"><tspan y="6" x="0" style="font-size: 11px;">200</tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="start" transform="translate(9,267)"><tspan y="6" x="0" style="font-size: 11px;">300</tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="start" transform="translate(9,221)"><tspan y="6" x="0" style="font-size: 11px;">400</tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="start" transform="translate(9,175)"><tspan y="6" x="0" style="font-size: 11px;">500</tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="start" transform="translate(9,130)"><tspan y="6" x="0" style="font-size: 11px;">600</tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="start" transform="translate(9,84)"><tspan y="6" x="0" style="font-size: 11px;">700</tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="start" transform="translate(9,38)"><tspan y="6" x="0" style="font-size: 11px;">800</tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="12" opacity="1" font-weight="bold" text-anchor="middle" transform="translate(-13,161) rotate(-90)"><tspan y="6" x="0" style="font-size: 12px;">No of Appointments</tspan></text></g><g transform="translate(29,0)" visibility="visible"><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="end" transform="translate(1125,313)"><tspan y="6" x="0" style="font-size: 11px;">200 </tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="end" transform="translate(1125,267)"><tspan y="6" x="0" style="font-size: 11px;">300 </tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="end" transform="translate(1125,221)"><tspan y="6" x="0" style="font-size: 11px;">400 </tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="end" transform="translate(1125,175)"><tspan y="6" x="0" style="font-size: 11px;">500 </tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="end" transform="translate(1125,130)"><tspan y="6" x="0" style="font-size: 11px;">600 </tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="end" transform="translate(1125,84)"><tspan y="6" x="0" style="font-size: 11px;">700 </tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="end" transform="translate(1125,38)"><tspan y="6" x="0" style="font-size: 11px;">800 </tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="12" opacity="1" font-weight="bold" text-anchor="middle" transform="translate(1147,161) rotate(-90)"><tspan y="6" x="0" style="font-size: 12px;">No of Appointments</tspan></text></g></g><g><g></g></g><g></g><g></g><g></g><clippath id="AmChartsEl-5"><rect x="29" y="0" width="1134" height="321" rx="0" ry="0" stroke-width="0"></rect></clippath></svg><a href="" title="JavaScript charts" style="position: absolute; text-decoration: none; color: rgb(0, 0, 0); font-family: Verdana; font-size: 11px; opacity: 0.7; display: block; left: 34px; top: 5px;"></a></div><div class="amChartsLegend amcharts-legend-div" style="overflow: hidden; position: relative; text-align: left; width: 1198px; height: 48px; cursor: default;"><svg version="1.1" style="position: absolute; width: 1198px; height: 48px;"><desc>JavaScript chart by amCharts 3.14.2</desc><g transform="translate(29,0)"><path cs="100,100" d="M0.5,0.5 L1134.5,0.5 L1134.5,37.5 L0.5,37.5 Z" fill="#FFFFFF" stroke="#000000" fill-opacity="0" stroke-width="1" stroke-opacity="0"></path><g transform="translate(0,11)"><g cursor="pointer" transform="translate(0,0)"><g><path cs="100,100" d="M0.5,8.5 L32.5,8.5" fill="none" stroke-width="1" stroke-opacity="1" stroke="#CC0000"></path><circle r="4" cx="0" cy="0" fill="#CC0000" stroke="#CC0000" fill-opacity="1" stroke-width="1" stroke-opacity="1" transform="translate(17,8)"></circle></g><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="start" transform="translate(37,7)"><tspan y="6" x="0" style="font-size: 11px;">No of Appointments</tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="start" transform="translate(175,7)"> </text><rect x="32" y="0" width="278.5" height="18" rx="0" ry="0" stroke-width="0" stroke="none" fill="#fff" fill-opacity="0.005"></rect></g><g cursor="pointer" transform="translate(320,0)"><path cs="100,100" d="M-15.5,8.5 L16.5,8.5 L16.5,-7.5 L-15.5,-7.5 Z" fill="#000000" stroke="#000000" fill-opacity="0.1" stroke-width="1" stroke-opacity="0" transform="translate(16,8)"></path><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="start" transform="translate(37,7)"><tspan y="6" x="0" style="font-size: 11px;">Total Appointment</tspan></text><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="start" transform="translate(167,7)">Total: 11,010</text><rect x="32" y="0" width="270.5" height="18" rx="0" ry="0" stroke-width="0" stroke="none" fill="#fff" fill-opacity="0.005"></rect></g></g></g></svg></div></div></div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>      
+
+
+
+        <div class="clearfix"></div>
+        <section id="footer">
+            <div class="container">
+                <p>© Copyright 2015.</p>  
+            </div><!--CONTAINER-->
+
+            <div class="clearfix"></div>
+        
+    </section>
+
+
+
+<script src="./DMR MIS_files/jquery-1.10.1.min.js"></script>
+<script type="text/javascript" src="./DMR MIS_files/jquery.easing-sooper.js"></script>
+<script type="text/javascript" src="./DMR MIS_files/superfish.js"></script> 
+<script type="text/javascript" src="./DMR MIS_files/mobile-menu.js"></script>
+
+<script type="text/javascript">
+                                //superfish menu
+                                $(function() {
+                                    $('ul.sf-menu').superfish({
+                                        delay: 50,
+                                        animation: {
+                                            opacity: 'show',
+                                            height: 'show'
+                                        },
+                                        disableHI: false
+                                    });
+                                });
+
+                                function validateLogin() {
+                                    if (document.getElementById("inputUser") != null && document.getElementById("inputUser").value == "") {
+                                        alert("Invalid Username");
+                                        return false;
+                                    }
+                                    if (document.getElementById("inputPassword") != null && document.getElementById("inputPassword").value == "") {
+                                        alert("Invalid Password");
+                                        return false;
+                                    }
+                                    if (document.getElementById("inputCap") != null && document.getElementById("inputCap").value == "") {
+                                        alert("Invalid Captcha");
+                                        return false;
+                                    }
+                                    return true;
+
+                                }
+
+                                function getDayWiseGraph(flagType) {
+                                    var hos_id = 0;
+                                    if (document.getElementById("ddlhospital") != null) {
+                                        hos_id = document.getElementById("ddlhospital").value;
+                                        try {
+                                            var tmp = hos_id.split("~")[0];
+                                            hos_id = tmp;
+                                        } catch (err) {
+                                            hos_id = 0;
+                                        }
+                                    }
+                                    var queryStr = "flagType=" + flagType + "&hos_id=0";
+                                    var xmlhttp_get = new getXMLObject();
+                                    setAjaxHeader(xmlhttp_get, "/DMRmis/slvt_Appointment", queryStr, false);
+                                    xmlhttp_get.onreadystatechange = function()
+                                    {
+                                        if (xmlhttp_get.readyState === 4 && xmlhttp_get.status === 200)
+                                        {
+
+                                            //getData(xmlhttp_get.responseText);
+                                            var chart;
+                                            var chartData;
+                                            var Data = "";
+                                            Data = JSON.parse(xmlhttp_get.responseText);
+                                            var List = Data.data;
+                                            chartData = List;
+
+                                            chart = new AmCharts.AmSerialChart();
+                                            chart.dataProvider = chartData;
+                                            chart.categoryField = "hours";
+                                            chart.startDuration = 0.5;
+                                            chart.balloon.color = "#000000";
+
+                                            // AXES
+                                            // category
+                                            var categoryAxis = chart.categoryAxis;
+                                            categoryAxis.fillAlpha = 1;
+                                            categoryAxis.fillColor = "#FAFAFA";
+                                            categoryAxis.gridAlpha = 0;
+                                            categoryAxis.axisAlpha = 0;
+                                            categoryAxis.gridPosition = "start";
+                                            categoryAxis.position = "top";
+
+                                            // value                       
+                                            var valueAxis = new AmCharts.ValueAxis();
+                                            valueAxis.title = "No of Appointments";
+                                            valueAxis.dashLength = 5;
+                                            valueAxis.axisAlpha = 0;
+                                            valueAxis.minimum = 1;
+                                            //valueAxis.maximum = 600;
+                                            valueAxis.integersOnly = true;
+                                            valueAxis.gridCount = 24;
+                                            valueAxis.reversed = false; // this line makes the value axis reversed
+                                            chart.addValueAxis(valueAxis);
+
+                                            // GRAPHS
+
+                                            var graph = new AmCharts.AmGraph();
+                                            graph.title = "Total";
+                                            graph.valueField = "tot";
+                                            graph.balloonText = "No Of Appointments upto [[category]]:00 hours: [[value]]";
+
+                                            graph.bullet = "square";
+                                            chart.addGraph(graph);
+
+
+                                            // CURSOR
+                                            var chartCursor = new AmCharts.ChartCursor();
+                                            chartCursor.cursorPosition = "mouse";
+                                            chartCursor.zoomable = false;
+                                            chartCursor.cursorAlpha = 0;
+                                            chart.addChartCursor(chartCursor);
+
+                                            // LEGEND
+                                            var legend = new AmCharts.AmLegend();
+                                            legend.useGraphSettings = true;
+                                            chart.addLegend(legend);
+
+                                            // WRITE
+                                            chart.write("chartdiv");
+
+
+
+                                        }
+                                    }
+                                    xmlhttp_get.send(queryStr);
+                                }
+
+                                function getMonthWsiseGraph(flagType) {
+                                    var hos_id = 0;
+                                    if (document.getElementById("ddlhospital") != null) {
+                                        hos_id = document.getElementById("ddlhospital").value;
+                                        try {
+                                            var tmp = hos_id.split("~")[0];
+                                            hos_id = tmp;
+                                        } catch (err) {
+                                            hos_id = 0;
+                                        }
+                                    }
+                                    var queryStr = "flagType=" + flagType + "&hos_id=0";
+                                    var xmlhttp_get = new getXMLObject();
+                                    setAjaxHeader(xmlhttp_get, "/DMRmis/slvt_Appointment", queryStr, true);
+                                    xmlhttp_get.onreadystatechange = function()
+                                    {
+                                        if (xmlhttp_get.readyState === 4 && xmlhttp_get.status === 200)
+                                        {
+
+                                            //getData(xmlhttp_get.responseText);
+                                            var chart;
+                                            var chartData;
+                                            var Data = "";
+                                            Data = JSON.parse(xmlhttp_get.responseText);
+                                            var List = Data.data;
+                                            chartData = List;
+
+                                            chart = new AmCharts.AmSerialChart();
+                                            chart.dataProvider = chartData;
+                                            chart.categoryField = "date";
+                                            chart.dataDateFormat = "DD-MM-YYYY";
+                                            chart.marginTop = 0;
+
+                                            // AXES
+                                            // category axis
+                                            var categoryAxis = chart.categoryAxis;
+                                            categoryAxis.parseDates = true; // as our data is date-based, we set parseDates to true
+                                            categoryAxis.minPeriod = "DD"; // our data is daily, so we set minPeriod to DD
+                                            categoryAxis.autoGridCount = false;
+                                            categoryAxis.gridCount = 50;
+                                            categoryAxis.gridAlpha = 0;
+                                            categoryAxis.gridColor = "#000000";
+                                            categoryAxis.axisColor = "#555555";
+
+                                            var durationAxis = new AmCharts.ValueAxis();
+                                            durationAxis.title = "No of Appointments";
+                                            durationAxis.gridAlpha = 0.05;
+                                            durationAxis.axisAlpha = 0;
+                                            durationAxis.inside = true;
+
+                                            chart.addValueAxis(durationAxis);
+
+                                            // Distance value axis
+                                            var distanceAxis = new AmCharts.ValueAxis();
+                                            distanceAxis.title = "No of Appointments";
+                                            distanceAxis.gridAlpha = 0;
+                                            distanceAxis.position = "right";
+                                            distanceAxis.inside = true;
+                                            distanceAxis.unit = " ";
+                                            distanceAxis.axisAlpha = 0;
+                                            chart.addValueAxis(distanceAxis);
+
+                                            // GRAPHS
+                                            // duration graph
+                                            var durationGraph = new AmCharts.AmGraph();
+                                            durationGraph.title = "No of Appointments";
+                                            durationGraph.valueField = "Appointment";
+                                            durationGraph.type = "line";
+                                            durationGraph.valueAxis = durationAxis; // indicate which axis should be used
+                                            durationGraph.lineColor = "#CC0000";
+                                            durationGraph.balloonText = "[[value]]";
+                                            durationGraph.lineThickness = 1;
+                                            durationGraph.legendValueText = "[[value]]";
+                                            durationGraph.bullet = "square";
+                                            durationGraph.bulletBorderColor = "#CC0000";
+                                            durationGraph.bulletBorderAlpha = 1;
+                                            durationGraph.bulletBorderThickness = 1;
+                                            durationGraph.bullet = "round";
+                                            chart.addGraph(durationGraph);
+
+                                            // distance graph
+                                            var distanceGraph = new AmCharts.AmGraph();
+                                            distanceGraph.valueField = "totapp1";
+                                            distanceGraph.title = "Total Appointment";
+                                            distanceGraph.type = "column";
+                                            distanceGraph.fillAlphas = 0.1;
+                                            distanceGraph.valueAxis = distanceAxis; // indicate which axis should be used
+                                            distanceGraph.balloonText = "";
+                                            distanceGraph.legendValueText = "";
+                                            distanceGraph.legendPeriodValueText = "Total: [[value.sum]]";
+                                            distanceGraph.lineColor = "#000000";
+                                            distanceGraph.lineAlpha = 0;
+                                            chart.addGraph(distanceGraph);
+
+                                            // CURSOR
+                                            var chartCursor = new AmCharts.ChartCursor();
+                                            chartCursor.zoomable = false;
+                                            chartCursor.categoryBalloonDateFormat = "DD";
+                                            chartCursor.cursorAlpha = 0;
+                                            chartCursor.valueLineEnabled = true;
+                                            chartCursor.valueLineBalloonEnabled = true;
+                                            chartCursor.valueLineAxis = distanceAxis;
+                                            chart.addChartCursor(chartCursor);
+
+                                            // LEGEND
+                                            var legend = new AmCharts.AmLegend();
+                                            legend.bulletType = "round";
+                                            legend.equalWidths = false;
+                                            legend.valueWidth = 120;
+                                            legend.color = "#000000";
+                                            legend.useGraphSettings = true;
+                                            chart.addLegend(legend);
+                                            // WRITE
+                                            chart.write("chartdiv1");
+
+                                        }
+                                    }
+                                    xmlhttp_get.send(queryStr);
+                                }
+                                function updateStat() {
+                                    getDashboard_count();
+                                    getDayWiseGraph(3);
+                                    getMonthWsiseGraph(4);
+                                }
+</script>
+
+<script type="text/javascript">
+    updateStat();
+</script>
+
+
+
+<script src="./DMR MIS_files/jquery.cookie.js"></script>
+<script src="./DMR MIS_files/skel.min.js"></script>
+<script src="./DMR MIS_files/skel-layers.min.js"></script>
+<script src="./DMR MIS_files/init.js"></script>
+
+
+
+
+</div><div id="skel-layers-hiddenWrapper" style="height: 100%;"></div><div id="skel-layers-visibleWrapper" style="position: relative;"></div></body></html>

@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html class="global xlarge"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="user-scalable=yes,width=device-width,initial-scale=1"><style type="text/css">html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}table{border-collapse:collapse;border-spacing:0}body{-webkit-text-size-adjust:none}</style><style type="text/css">*,*:before,*:after{-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box}</style><meta name="viewport" content="initial-scale=1">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, Chrome=1">
+        <meta name="keywords" content="">
+        <meta name="description" content="">
+	        <title>Digital Medical Reconciliation - HOME</title>
+        <link href="./DMR-Home_files/stylesheet.css" rel="stylesheet" type="text/css" media="all">
+        <link href="./DMR-Home_files/font-awesome.min.css" rel="stylesheet" type="text/css" media="all">
+        <link href="./DMR-Home_files/menu.css" rel="stylesheet" type="text/css" media="all">
+
+        <!--SLIDER-->
+        <link rel="stylesheet" type="text/css" href="./DMR-Home_files/flexslider.css">
+        <link rel="stylesheet" type="text/css" href="./DMR-Home_files/style.css">
+       
+        <!-- animated-css -->
+        <link href="./DMR-Home_files/animate.css" rel="stylesheet" type="text/css" media="all">
+        <script src="./DMR-Home_files/wow.min.js"></script>
+        <script>
+            new WOW().init();
+        </script>
+
+        <!--SKEl-->
+        <link rel="stylesheet" href="./DMR-Home_files/skel.css">
+        <link rel="stylesheet" href="./DMR-Home_files/style.css">
+        <link rel="stylesheet" href="./DMR-Home_files/style-xlarge.css">
+
+        <script>
+
+            function getXMLObject()//XML OBJECT
+            {
+                var xmlHttp = false;
+                try {
+                    xmlHttp = new ActiveXObject("Msxml2.XMLHTTP")  // For Old Microsoft Browsers
+                }
+                catch (e) {
+                    try {
+                        xmlHttp = new ActiveXObject("Microsoft.XMLHTTP")  // For Microsoft IE 6.0+
+                    }
+                    catch (e2) {
+                        xmlHttp = false   // No Browser accepts the XMLHTTP Object then false
+                    }
+                }
+                if (!xmlHttp && typeof XMLHttpRequest != 'undefined') {
+                    xmlHttp = new XMLHttpRequest(); //For Mozilla, Opera Browsers
+                }
+                return xmlHttp; // Mandatory Statement returning the ajax object created
+            }
+
+            function setAjaxHeader(xmlhttp, URL, tempqueryStr, Flag) {
+                xmlhttp.open("POST", URL, Flag);
+                xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=UTF-8");
+                xmlhttp.setRequestHeader("Content-length", tempqueryStr.length);
+                xmlhttp.setRequestHeader("Connection", "close");
+            }
+
+            function getDashboard_count() {
+
+                var queryStr = "flagType=1&page_id=1";
+                var xmlhttp_get = new getXMLObject();
+                setAjaxHeader(xmlhttp_get, "/copp/slvt_Appointment", queryStr, true);
+                xmlhttp_get.onreadystatechange = function()
+                {
+                    if (xmlhttp_get.readyState === 4 && xmlhttp_get.status === 200)
+                    {
+                        var result = xmlhttp_get.responseText;
+                        document.getElementById("dsb1").innerHTML = result.split("~")[0];
+                        document.getElementById("dsb2").innerHTML = result.split("~")[1];
+                        document.getElementById("dsb3").innerHTML = result.split("~")[2];
+                        document.getElementById("last_app").innerHTML = result.split("~")[5];
+                        document.getElementById("dsb1_1").innerHTML = result.split("~")[6];
+                        document.getElementById("dsb2_2").innerHTML = result.split("~")[7];
+                        document.getElementById("dsb3_3").innerHTML = result.split("~")[8];
+                    }
+                }
+                xmlhttp_get.send(queryStr);
+            }
+
+        </script>
+    <style type="text/css">.row{border-bottom:solid 1px transparent}.row>*{float:left}.row:after,.row:before{content:"";display:block;clear:both;height:0}.row.uniform>*>:first-child{margin-top:0}.row.uniform>*>:last-child{margin-bottom:0}.\31 2u,.\31 2u\24{width:100%;clear:none;margin-left:0}.\31 1u,.\31 1u\24{width:91.6666666667%;clear:none;margin-left:0}.\31 0u,.\31 0u\24{width:83.3333333333%;clear:none;margin-left:0}.\39 u,.\39 u\24{width:75%;clear:none;margin-left:0}.\38 u,.\38 u\24{width:66.6666666667%;clear:none;margin-left:0}.\37 u,.\37 u\24{width:58.3333333333%;clear:none;margin-left:0}.\36 u,.\36 u\24{width:50%;clear:none;margin-left:0}.\35 u,.\35 u\24{width:41.6666666667%;clear:none;margin-left:0}.\34 u,.\34 u\24{width:33.3333333333%;clear:none;margin-left:0}.\33 u,.\33 u\24{width:25%;clear:none;margin-left:0}.\32 u,.\32 u\24{width:16.6666666667%;clear:none;margin-left:0}.\31 u,.\31 u\24{width:8.3333333333%;clear:none;margin-left:0}.\31 2u\24+*,.\31 1u\24+*,.\31 0u\24+*,.\39 u\24+*,.\38 u\24+*,.\37 u\24+*,.\36 u\24+*,.\35 u\24+*,.\34 u\24+*,.\33 u\24+*,.\32 u\24+*,.\31 u\24+*{clear:left;}.\-11u{margin-left:91.6666666667%}.\-10u{margin-left:83.3333333333%}.\-9u{margin-left:75%}.\-8u{margin-left:66.6666666667%}.\-7u{margin-left:58.3333333333%}.\-6u{margin-left:50%}.\-5u{margin-left:41.6666666667%}.\-4u{margin-left:33.3333333333%}.\-3u{margin-left:25%}.\-2u{margin-left:16.6666666667%}.\-1u{margin-left:8.3333333333%}</style><style type="text/css">.container{margin-left:auto;margin-right:auto;width:1200px}.container.\31 25\25{width:100%;max-width:1500px;min-width:1200px}.container.\37 5\25{width:900px}.container.\35 0\25{width:600px}.container.\32 5\25{width:300px}</style><style type="text/css">.row>*{padding:0px 0 0 2em}.row{margin:0px 0 -1px -2em}.row.uniform>*{padding:2em 0 0 2em}.row.uniform{margin:-2em 0 -1px -2em}.row.\32 00\25>*{padding:0px 0 0 4em}.row.\32 00\25{margin:0px 0 -1px -4em}.row.uniform.\32 00\25>*{padding:4em 0 0 4em}.row.uniform.\32 00\25{margin:-4em 0 -1px -4em}.row.\31 50\25>*{padding:0px 0 0 3em}.row.\31 50\25{margin:0px 0 -1px -3em}.row.uniform.\31 50\25>*{padding:3em 0 0 3em}.row.uniform.\31 50\25{margin:-3em 0 -1px -3em}.row.\35 0\25>*{padding:0px 0 0 1em}.row.\35 0\25{margin:0px 0 -1px -1em}.row.uniform.\35 0\25>*{padding:1em 0 0 1em}.row.uniform.\35 0\25{margin:-1em 0 -1px -1em}.row.\32 5\25>*{padding:0px 0 0 0.5em}.row.\32 5\25{margin:0px 0 -1px -0.5em}.row.uniform.\32 5\25>*{padding:0.5em 0 0 0.5em}.row.uniform.\32 5\25{margin:-0.5em 0 -1px -0.5em}.row.\30 \25>*{padding:0}.row.\30 \25{margin:0 0 -1px 0}</style><style type="text/css">.\31 2u\28 global\29,.\31 2u\24\28 global\29{width:100%;clear:none;margin-left:0}.\31 1u\28 global\29,.\31 1u\24\28 global\29{width:91.6666666667%;clear:none;margin-left:0}.\31 0u\28 global\29,.\31 0u\24\28 global\29{width:83.3333333333%;clear:none;margin-left:0}.\39 u\28 global\29,.\39 u\24\28 global\29{width:75%;clear:none;margin-left:0}.\38 u\28 global\29,.\38 u\24\28 global\29{width:66.6666666667%;clear:none;margin-left:0}.\37 u\28 global\29,.\37 u\24\28 global\29{width:58.3333333333%;clear:none;margin-left:0}.\36 u\28 global\29,.\36 u\24\28 global\29{width:50%;clear:none;margin-left:0}.\35 u\28 global\29,.\35 u\24\28 global\29{width:41.6666666667%;clear:none;margin-left:0}.\34 u\28 global\29,.\34 u\24\28 global\29{width:33.3333333333%;clear:none;margin-left:0}.\33 u\28 global\29,.\33 u\24\28 global\29{width:25%;clear:none;margin-left:0}.\32 u\28 global\29,.\32 u\24\28 global\29{width:16.6666666667%;clear:none;margin-left:0}.\31 u\28 global\29,.\31 u\24\28 global\29{width:8.3333333333%;clear:none;margin-left:0}.\31 2u\24\28 global\29+*,.\31 1u\24\28 global\29+*,.\31 0u\24\28 global\29+*,.\39 u\24\28 global\29+*,.\38 u\24\28 global\29+*,.\37 u\24\28 global\29+*,.\36 u\24\28 global\29+*,.\35 u\24\28 global\29+*,.\34 u\24\28 global\29+*,.\33 u\24\28 global\29+*,.\32 u\24\28 global\29+*,.\31 u\24\28 global\29+*{clear:left;}.\-11u\28 global\29{margin-left:91.6666666667%}.\-10u\28 global\29{margin-left:83.3333333333%}.\-9u\28 global\29{margin-left:75%}.\-8u\28 global\29{margin-left:66.6666666667%}.\-7u\28 global\29{margin-left:58.3333333333%}.\-6u\28 global\29{margin-left:50%}.\-5u\28 global\29{margin-left:41.6666666667%}.\-4u\28 global\29{margin-left:33.3333333333%}.\-3u\28 global\29{margin-left:25%}.\-2u\28 global\29{margin-left:16.6666666667%}.\-1u\28 global\29{margin-left:8.3333333333%}.\31 2u\28 xlarge\29,.\31 2u\24\28 xlarge\29{width:100%;clear:none;margin-left:0}.\31 1u\28 xlarge\29,.\31 1u\24\28 xlarge\29{width:91.6666666667%;clear:none;margin-left:0}.\31 0u\28 xlarge\29,.\31 0u\24\28 xlarge\29{width:83.3333333333%;clear:none;margin-left:0}.\39 u\28 xlarge\29,.\39 u\24\28 xlarge\29{width:75%;clear:none;margin-left:0}.\38 u\28 xlarge\29,.\38 u\24\28 xlarge\29{width:66.6666666667%;clear:none;margin-left:0}.\37 u\28 xlarge\29,.\37 u\24\28 xlarge\29{width:58.3333333333%;clear:none;margin-left:0}.\36 u\28 xlarge\29,.\36 u\24\28 xlarge\29{width:50%;clear:none;margin-left:0}.\35 u\28 xlarge\29,.\35 u\24\28 xlarge\29{width:41.6666666667%;clear:none;margin-left:0}.\34 u\28 xlarge\29,.\34 u\24\28 xlarge\29{width:33.3333333333%;clear:none;margin-left:0}.\33 u\28 xlarge\29,.\33 u\24\28 xlarge\29{width:25%;clear:none;margin-left:0}.\32 u\28 xlarge\29,.\32 u\24\28 xlarge\29{width:16.6666666667%;clear:none;margin-left:0}.\31 u\28 xlarge\29,.\31 u\24\28 xlarge\29{width:8.3333333333%;clear:none;margin-left:0}.\31 2u\24\28 xlarge\29+*,.\31 1u\24\28 xlarge\29+*,.\31 0u\24\28 xlarge\29+*,.\39 u\24\28 xlarge\29+*,.\38 u\24\28 xlarge\29+*,.\37 u\24\28 xlarge\29+*,.\36 u\24\28 xlarge\29+*,.\35 u\24\28 xlarge\29+*,.\34 u\24\28 xlarge\29+*,.\33 u\24\28 xlarge\29+*,.\32 u\24\28 xlarge\29+*,.\31 u\24\28 xlarge\29+*{clear:left;}.\-11u\28 xlarge\29{margin-left:91.6666666667%}.\-10u\28 xlarge\29{margin-left:83.3333333333%}.\-9u\28 xlarge\29{margin-left:75%}.\-8u\28 xlarge\29{margin-left:66.6666666667%}.\-7u\28 xlarge\29{margin-left:58.3333333333%}.\-6u\28 xlarge\29{margin-left:50%}.\-5u\28 xlarge\29{margin-left:41.6666666667%}.\-4u\28 xlarge\29{margin-left:33.3333333333%}.\-3u\28 xlarge\29{margin-left:25%}.\-2u\28 xlarge\29{margin-left:16.6666666667%}.\-1u\28 xlarge\29{margin-left:8.3333333333%}</style><style type="text/css">.not-global,.not-xlarge{display:none!important}.only-large,.only-medium,.only-small,.only-xsmall{display:none!important}</style><link rel="stylesheet" type="text/css" href="./DMR-Home_files/style.css"><link rel="stylesheet" type="text/css" href="./DMR-Home_files/style-xlarge.css"></head>
+    <body class=""><div id="skel-layers-wrapper" style="position: relative; left: 0px; right: 0px; top: 0px; backface-visibility: hidden; transition: -webkit-transform 0.5s ease, opacity 0.5s ease;">
+
+<section id="header-wrapper">
+    <div id="header_top">
+        <div class="container">
+            <div class="row">
+                <div class="6u 12u(small)">
+                    <div class="medicare"> <span>DMR</span>
+                    </div>
+                    <h6 class="logo">
+                        Code For India Initative
+                    </h6>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="header" class="container">
+        <div class="row">
+            <div class="4u 12u(small)">
+                <a href="./DMR-Home.html/#" class="logo">
+                <img src="./DMR-Home_files/emblemimage.jpg" alt="DMR">
+                    <!img src="./DMR-Home_files/emblem.png" alt="DMR">
+                </a>
+            </div>
+            
+           <div class="5u 12u(small)">
+                <div id="menu">
+                    <nav id="main-menu" class="main-menu">
+                        <ul id="menu-nav" class="sf-menu sf-js-enabled">
+                            <li><a href="./DMR-Home.html"><span>Home</span>Home</a></li>
+                            <li><a href="./DMR-Home.html">Appointment</a></li>
+                            <li><a href="./DMR-Home.html">Dashboard</a></li>	
+                        </ul><select class="mnav"><option value="#">Navigate to...</option><option value="./DMR-Home.html">  Home</option><option value="./DMR-Home.html"> Appointment</option><option value="./DMR-Home.html"> Dashboard</option></select>
+                        <div class="clearfix"></div>
+                    </nav><!--NAVIGATION-->
+                </div>
+            </div><!--NAVIGATION_EDNS-->
+            <div class="2u 12u(small)">
+                <a class="logo" href="./DMR-Home.html">
+                    <!--logo image hidden-->
+                    <!img alt="ORF" src="./DMR-Home_files/digitalindia.png">
+                </a>
+            </div>
+            <div class="clearfix 12u"></div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <!--NAVIGATION & HEADER-->	
+</section>
+<div class="clearfix"></div>
+
+        
+        <!-- Slider -->
+        <div class="flexslider">
+            <ul class="slides">
+                <li class="flex-active-slide" style="width: 100%; float: left; margin-right: -100%; position: relative; opacity: 1; display: block; z-index: 2;">
+                    <img src="./DMR-Home_files/1.jpg" alt="DMR Patient Portal" title="DMR Patient Portal" draggable="false">
+                    <div class="container">
+                        <div class="flex-caption">
+                            <!-- <h2>Now getting an appointment for a government hospital is easy &amp; friendly</h2>-->
+                            <h2 style="display: block;">
+                                Now getting an  appointment with Doctor  in any government hospital has become online &amp; easy
+                            </h2>
+
+                            <a href="./DMR-Home.html" class="button">  Book Appointment Now</a>
+
+                            <a href=".\DMR Patient Portal.html" class="button greenbg">Lab Reports</a>
+                                                        
+                             
+
+                        </div>
+                    </div>
+                </li>
+
+            </ul>
+        <ol class="flex-control-nav flex-control-paging"></ol><ul class="flex-direction-nav"><li><a class="flex-prev flex-disabled" href="./DMR-Home.html/#" tabindex="-1">Previous</a></li><li><a class="flex-next flex-disabled" href="./DMR-Home.html/#" tabindex="-1">Next</a></li></ul></div>
+        <div class="slider_bottom">
+
+        </div>
+
+        <section id="features" class="page">
+            <div class="container">
+                <div class="head">
+                    <h2> Features</h2>
+                    <div class="btm_ico">
+                        <span><img src="./DMR-Home_files/doc_ico.png" alt=""></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="4u 12u(medium)">
+                        <div class="feature_txt">
+                            <p style="font-family:&#39;source_sans_proregular&#39;;font-size: 15px; line-height:170%">
+                                Digital Medical Reconciliation (DMR) is a framework to link various hospitals, doctors across the country for OTP based registration and appointment system where patient received a unique OTP after registration which is used for further appointment. We developed this portal in thinking of rural areas so that proper medication, diagnosis, services that can be provided to the patient immediately. This portal is currently running on a local host database. In future we will use cloud services for storing data. Portal facilitates online appointments with various departments of different Hospitals using their mobile number. The system will take care of the appointments of doctors and will have facility to get next patient in case the appointee is not available or absent. Doctors will be able feed the prescription via keystrokes, file or cam scanner to the repository. This system will automatically generate notification and send to the individual on their phone for pending medical checkups, medications, medical test and treatments. 
+                        </p></div>
+                    </div>
+
+                    <div class="4u 6u(medium) 12u(small)">
+                        <ul class="style2">
+                            <li class="row">
+                                <div class="2u 1u(small) 2u(xsmall)">
+                                    <div class="ico">
+                                        <i class="fa fa-plus"></i>
+                                    </div>
+                                </div>
+
+                                <div class="10u 11u(small) 10u(xsmall)">
+                                    <h3>Simple appointment process </h3>
+                                    <p>We are making the process simpler. Patient has his registration details. All he has to do is to verify his registration details which he has used at the time of registration, verify his mobile number, select hospital, department, select date of appointment and receive confirmation for appointment </p>
+                                </div>
+                                <div class="12u clearfix"></div>
+                            </li>
+
+                            <li class="row">
+                                <div class="2u 1u(small) 2u(xsmall)">
+                                    <div class="ico">
+                                        <i class="fa fa-dashboard"></i>
+                                    </div>
+                                </div>
+
+                                <div class="10u 11u(small) 10u(xsmall)">
+                                    <h3>Dashboard Reports </h3>
+                                    <p> Dashboard has reports for blood banks .Dashboard with the details of medicines being utilized , disease type, type of medication provided area wise .Printing the reports or take away on email </p>
+                                </div>
+                                <div class="12u clearfix"></div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="4u 6u(medium) 12u(small)">
+                        <ul class="style2">
+                            <li class="row">
+                                <div class="2u 1u(small) 2u(xsmall)">
+                                    <div class="ico">
+                                        <i class="fa fa-hospital-o"></i>
+                                    </div>
+                                </div>
+
+                                <div class="10u  11u(small) 10u(xsmall)">
+                                    <h3> Hospital On Boarding</h3>
+                                    <p>
+                                        Doctors will be able feed the prescription via keystrokes, file or cam scanner to the repository. This system will automatically generate notification and send to the individual on their phone for pending medical checkups, medications, medical test and treatments. Hospitals can come on board this platform and provide their appointment slots for online booking by patients. The system facilitates Hospitals to easily manage their registration and appointment process and monitor the flow of patients. 
+                                    </p>
+                                </div>
+                                <div class="12u clearfix"></div>
+                            </li>
+
+
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+        <div class="clearfix"></div>
+
+        <section id="onboard">
+            <div class="container">
+                <p> Have you moved online, why not yet?</p>
+                <a href="./page-2.html"  class="button resetbtn"> Join Here</a>
+                <a href="./DMR-Login.html"  class="button resetbtn"> Login</a>
+              <div class="margin10"></div>
+            </div>
+        </section>
+
+     
+<div class="clearfix"></div>
+<section id="footer">
+   <div class="container">
+       <p> © Copyright 2015.</p>
+   </div><!--CONTAINER-->
+   <div class="clearfix"></div>
+</section>
+
+    <script src="./DMR-Home_files/jquery-1.10.1.min.js"></script>
+    <script type="text/javascript" src="./DMR-Home_files/jquery.easing-sooper.js"></script>
+    <script type="text/javascript" src="./DMR-Home_files/superfish.js"></script> 
+    <script type="text/javascript" src="./DMR-Home_files/mobile-menu.js"></script>
+
+    <script type="text/javascript">
+                                        //superfish menu
+                                        $(function() {
+                                            $('ul.sf-menu').superfish({
+                                                delay: 50,
+                                                animation: {
+                                                    opacity: 'show',
+                                                    height: 'show'
+                                                },
+                                                disableHI: false
+                                            });
+                                        });
+    </script>
+
+
+    <script type="text/javascript" src="./DMR-Home_files/jquery.flexslider-min.js"></script>
+    <script type="text/javascript">
+
+                                        /* Main Slider **************************/
+
+                                        $('.flexslider').flexslider({
+                                            animationSpeed: 1000,
+                                            slideshowSpeed: 5000,
+                                            animation: "fade",
+                                            controlNav: true,
+                                            touch: true,
+                                            start: function(slider) {
+                                                $('.slides').find('.flex-caption h2').fadeIn(600);
+                                            },
+                                            before: function(slider) {
+                                                $('.slides').find('.flex-caption h2').fadeOut(400);
+                                            },
+                                            after: function(slider) {
+                                                $('.slides').find('.flex-caption h2').fadeIn(600);
+                                            }
+
+                                        });
+
+                                        function getMoreInfo(flag) {
+                                            if (flag == 8) {
+                                                window.location.href = "more.jsp"
+                                            } else if (flag == 9) {
+                                                window.location.href = "TodayAppDetails.jsp"
+                                            } else if (flag == 10) {
+                                                window.location.href = "AppDetails.jsp"
+                                            }else if (flag == 12) {
+                                                window.location.href = "ehospitalTot.jsp"
+                                            }else if (flag == 13) {
+                                                window.location.href = "ehospitalNT.jsp"
+                                            }else if (flag == 14) {
+                                                window.location.href = "ehospitalFT.jsp"
+                                            }
+
+                                        }
+    </script>
+
+
+
+    <script src="./DMR-Home_files/jquery.cookie.js"></script>
+    <script src="./DMR-Home_files/skel.min.js"></script>
+    <script src="./DMR-Home_files/skel-layers.min.js"></script>
+    <script src="./DMR-Home_files/init.js"></script>
+
+    <script>
+                                        getDashboard_count();
+    </script>
+
+</div><div id="skel-layers-hiddenWrapper" style="height: 100%;"></div><div id="skel-layers-visibleWrapper" style="position: relative;"></div></body></html>
